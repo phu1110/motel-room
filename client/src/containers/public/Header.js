@@ -10,8 +10,8 @@ const Header = () => {
   const goLogin = useCallback(() => {
     navigate(path.LOGIN);
   }, []);
-  const goMain = useCallback(() => {
-    navigate(path.MAIN);
+  const goHome = useCallback(() => {
+    navigate('/');
   }, [navigate]);
   return (
     <div className='w-1100'>
@@ -20,7 +20,7 @@ const Header = () => {
         className='w-[240px] h-[70px] object-container'
         src={logo}
         alt='logo'
-        onClick = {goMain}
+        onClick = {goHome}
       />
       <div className='flex items-center gap-1'>
         <small>Tìm kiếm vui vẻ - Thuê trọ chất lượng, giá hợp lý!</small>
