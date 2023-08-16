@@ -2,13 +2,14 @@ import React from "react";
 import { Button } from "../../components";
 import anhtro from "../../assets/images/nhanobita.jpg";
 import icons from "../../ultils/icons";
-const { FiStar } = icons;
+import { TiemKiemGia } from "../../components";
+const { BsChevronRight } = icons;
 const Main = () => {
   return (
     <div className="flex justify-between  w-1100 ">
-      <div className="left w-[740px] border border-black ">
+      <div className="left w-[740px] h-[972px] border border-black rounded-lg">
         <h2 className="font-bold ml-[5px]">Danh Sách Đăng Tin</h2>
-        <div className="arrange flex justify-betwen items-center ">
+        <div className="arrange flex justify-betwen items-center  ">
           <small> Sắp Xếp : </small>
           <div className="flex justify-between">
             <Button
@@ -33,7 +34,7 @@ const Main = () => {
         </div>
         <div className="w-full h-[1px] bg-black my-5"></div>
         <div className="m-4">
-          <div className="Product static flex justify-between my-8 border border-gray-400">
+          <div className="Product static flex justify-between my-8 border border-gray-400 rounded-lg">
             <div className="images w-[280px]  relative">
               <img
                 src={anhtro}
@@ -77,7 +78,7 @@ const Main = () => {
               </div>
             </div>
           </div>
-          <div className="Product static flex justify-between my-8 border border-gray-400">
+          <div className="Product static flex justify-between my-8 border border-gray-400 rounded-lg">
             <div className="images w-[280px]  relative">
               <img
                 src={anhtro}
@@ -121,7 +122,7 @@ const Main = () => {
               </div>
             </div>
           </div>
-          <div className="Product static flex justify-between my-8 border border-gray-400">
+          <div className="Product static flex justify-between my-8 border border-gray-400 rounded-lg">
             <div className="images w-[280px]  relative">
               <img
                 src={anhtro}
@@ -167,7 +168,44 @@ const Main = () => {
           </div>
         </div>
       </div>
-      <div className="right w-[340px] border border-black h-[400px]"></div>
+      <div className="right flex flex-col gap-4">
+      <div className="w-[340px] border border-black h-[380px] rounded-lg">
+      <h2 className="text-center text-xl font-bold my-4">Tìm theo giá</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'1 Triệu'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'2 Triệu'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'3 Triệu'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'4 Triệu'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'5 Triệu'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'6 Triệu'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'7 Triệu'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'8 Triệu'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'9 Triệu'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'10 Triệu'}></TiemKiemGia>
+            </div>
+      </div>
+      <div className="w-[340px] border border-black h-[340px] rounded-lg">
+      <h2 className="text-center text-xl font-bold my-4">Tìm Trọ Theo Giá</h2>
+          <div className="grid grid-cols-1 gap-2">
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
+            </div>
+      </div>
+      <div className="w-[340px] border border-black h-[220px] rounded-lg">
+      <h2 className="text-center text-xl font-bold my-4">Tìm Theo Diện Tích</h2>
+          <div className="grid grid-cols-2 gap-2">
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Bao Nhiêu Mét ?'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Bao Nhiêu Mét ?'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Bao Nhiêu Mét ?'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Bao Nhiêu Mét ?'}></TiemKiemGia>
+            <TiemKiemGia link={'/Login'} Icons={BsChevronRight} text={'Bao Nhiêu Mét ?'}></TiemKiemGia>
+            </div>
+      </div>
+</div>
+
     </div>
   );
 };
