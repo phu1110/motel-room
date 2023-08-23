@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Login, Main, Home } from '../../client/src/containers/public';
+import { Login, Main, Home,Productdetails,Register } from '../../client/src/containers/public';
 import { path } from '../../client/src/ultils/constants';
 
 function App() {
@@ -9,7 +9,9 @@ function App() {
         <Route path="/" element={<Home />}>
           {/* Hiển thị cả header và main khi vào trang home */}
           <Route index element={<Main />} />
+          <Route path={path.PRODUCT} element={<Productdetails />} />
           <Route path={path.LOGIN} element={<Login />} />
+          <Route path={path.REGISTER} element={<Register />} />
         </Route>
         
       </Routes>
