@@ -9,7 +9,10 @@ const Header = () => {
   const navigate = useNavigate()
   const goLogin = useCallback(() => {
     navigate(path.LOGIN);
-  }, []);
+  }, [navigate]);
+  const goRegister = useCallback(() => {
+    navigate(path.REGISTER);
+  }, [navigate]);
   const goHome = useCallback(() => {
     navigate('/');
   }, [navigate]);
@@ -25,7 +28,7 @@ const Header = () => {
       <div className='flex items-center gap-1'>
         <small>Tìm kiếm vui vẻ - Thuê trọ chất lượng, giá hợp lý!</small>
         <Button text={'Đăng nhập'} textColor='text-white' bgColor='bg-[#3961fb]' onClick={goLogin}></Button>
-        <Button text={'Đăng kí'} textColor='text-white' bgColor='bg-[#3961fb]' onClick={goLogin}></Button>
+        <Button text={'Đăng kí'} textColor='text-white' bgColor='bg-[#3961fb]' onClick={goRegister}></Button>
         <Button text={'Đăng tin mới'} textColor='text-white' bgColor='bg-[#F73859]' BsPlus={AiOutlinePlusCircle}></Button>
       </div>
     </div>
