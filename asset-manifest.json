@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/motel-room/static/css/main.fe84977d.css",
+    "main.js": "/motel-room/static/js/main.cc74e16c.js",
+    "static/media/nhanobita.jpg": "/motel-room/static/media/nhanobita.45ab986b7f1b92dfee25.jpg",
+    "static/media/nha.jpg": "/motel-room/static/media/nha.2cc64ed3007a97539314.jpg",
+    "static/media/logo-phongtro.svg": "/motel-room/static/media/logo-phongtro.a9d1256d599012e3ca3729e3ec1f9d28.svg",
+    "index.html": "/motel-room/index.html",
+    "main.fe84977d.css.map": "/motel-room/static/css/main.fe84977d.css.map",
+    "main.cc74e16c.js.map": "/motel-room/static/js/main.cc74e16c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fe84977d.css",
+    "static/js/main.cc74e16c.js"
+  ]
+}
