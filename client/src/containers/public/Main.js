@@ -8,7 +8,7 @@ const Main = () => {
   return (
     <div className="flex justify-between  w-1100 ">
       <div className="left w-[740px]  ">
-        <div className="border border-black rounded-lg my-4">
+        <div className="border border-black rounded-lg ">
         <h2 className="font-bold ml-[5px]">Danh Sách Đăng Tin</h2>
         <div className="arrange flex justify-betwen items-center ml-[15px]">
           <small> Sắp Xếp : </small>
@@ -111,16 +111,6 @@ const Main = () => {
             <TiemKiemGia link={'/Product'} Icons={BsChevronRight} text={'8 Triệu'}></TiemKiemGia>
             <TiemKiemGia link={'/Product'} Icons={BsChevronRight} text={'9 Triệu'}></TiemKiemGia>
             <TiemKiemGia link={'/Product'} Icons={BsChevronRight} text={'10 Triệu'}></TiemKiemGia>
-          </div>
-        </div>
-        <div className="w-[340px] border border-black h-[340px] rounded-lg">
-          <h2 className="text-center text-xl font-bold my-4">Tìm Trọ Theo Giá</h2>
-          <div className="grid grid-cols-1 gap-2">
-            <TiemKiemGia link={'/Product'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
-            <TiemKiemGia link={'/Product'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
-            <TiemKiemGia link={'/Product'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
-            <TiemKiemGia link={'/Product'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
-            <TiemKiemGia link={'/Product'} Icons={BsChevronRight} text={'Thuê Nhà Giá Rẻ'}></TiemKiemGia>
           </div>
         </div>
         <div className="w-[340px] border border-black h-[220px] rounded-lg">
