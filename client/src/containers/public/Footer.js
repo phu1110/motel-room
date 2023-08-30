@@ -65,8 +65,8 @@ const Footer = () => {
     navigate('/');
   }, [navigate]);
   return (
-    <div className="border border-solid">
-      <div className="w-screen h-[400px] flex justify-evenly ">
+    <div className="border border-solid w-full">
+      <div className="w-full h-[400px] flex justify-evenly ">
         <div className="about ml-[50px]">
           <div>
             <h2 className="font-sans text-3xl m-[20px]"> Thông Tin Liên Hệ</h2>

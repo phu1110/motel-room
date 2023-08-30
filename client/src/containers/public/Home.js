@@ -1,16 +1,40 @@
-import React from 'react'
-import Header from './Header'
-import Footer from './Footer'
-import { Outlet } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import Navigation from './Navigation';
+import { Outlet } from 'react-router-dom';
+import '../../assets/css/style.css';
+
 const Home = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className='w-full h-1100 flex flex-col items-center '>
-      <Header/>
-      <div className='w-1100 flex flex-col items-center justify-start mt-3'>
-        <Outlet/>
+    <div className="app">
+      <Header />
+      <div className={`navigation-container ${scrolled ? 'fixed-navbar' : ''}`}>
+        <Navigation />
       </div>
-      <Footer/>
+      <div className='w-1100 flex flex-col items-center justify-start'>
+        <Outlet />
+      </div>
+      <Footer />
     </div>
-  )
-}
-export default Home
+  );
+};
+
+export default Home;

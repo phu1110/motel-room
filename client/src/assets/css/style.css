@@ -1,0 +1,36 @@
+/* styles.css */
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .navigation-container {
+    width: 100%;
+  }
+  
+  .fixed-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    /* Các thuộc tính CSS khác cho navbar đã cuộn */
+  }
+  .navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .info-user {
+    position: fixed;
+    top: 50px; /* Để cho Navigation rộng 50px */
+    left: 0;
+    width: 300px;
+    display: block;/* Đặt z-index thấp hơn để InfoUser nằm dưới Navigation */
+  }
+  
+  
