@@ -5,4 +5,5 @@ export const path = {
     REGISTER : 'Register',
     POST: 'Post',
     POSTNEW : 'PostNew',
+    NEWSMANAGER : 'NewsManager',
 }

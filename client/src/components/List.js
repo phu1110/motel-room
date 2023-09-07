@@ -1,17 +1,17 @@
 import React,{memo} from 'react'
 
-
 const List = ({images,link,content,description,price,acreage,address,time,phone}) => {
+ 
   return (
     <div className="Product static flex justify-between my-8 border border-gray-400 rounded-lg">
-            <div className="images w-[280px]  relative">
-            <a href={link}> {/* Sử dụng thẻ <a> để tạo liên kết */}
+            <div className="images w-[280px] h-[220px] relative">
+            <p onClick={link}>
           <img
             src={images}
             className="w-full h-full border border-black object-cover"
             alt="Biểu trưng ABC Corp"
           />
-        </a>
+        </p>
               <span className="group absolute bottom-0 right-0 p-2 transition-colors duration-300"></span>
             </div>
             <div className="w-[400px] ">

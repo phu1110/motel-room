@@ -134,7 +134,7 @@ const PostNew = () => {
                     Gửi
                 </button></div>
                 <div className=" bg-yellow-200 w-1/4 h-[500px] mr-[200px]">
-                <div class="card-body ml-[15px] ">
+                <div class="card-body ml-[15px] md:w-full">
                         <p class="card-title text-xl">Lưu ý khi đăng tin</p>
                         <ul>
                             <li className="text-base p-2">Nội dung phải viết bằng tiếng Việt có dấu</li>

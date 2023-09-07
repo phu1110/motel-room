@@ -1,30 +1,56 @@
-import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../../assets/css/style.css';
-const Navigation = () => {
-  
-  const navigate = useNavigate();
-  const goHome = useCallback(() => {
-    navigate('/');
-  }, [navigate]);
- 
-  return (
-    <div className='navbar bg-cyan-600 w-full' >
-      <div className=' md:px-20'>
-        <nav className='flex items-center justify-start h-16'>
-          <div className='flex items-center'>
-            <p className='text-white text-lg font-semibold mr-[20px] cursor-pointer' onClick={goHome}>Trang Chủ</p>
-          </div>
-          <div className=' md:flex space-x-4'>
-            <p className='text-white hover:text-pink-400 transition-colors cursor-pointer'>Thuê Trọ</p>
-            <p className='text-white hover:text-pink-400 transition-colors cursor-pointer'>Thuê Căn Hộ</p>
-            <p className='text-white hover:text-pink-400 transition-colors cursor-pointer'>Thuê Chung Cư</p>
-            <p className='text-white hover:text-pink-400 transition-colors cursor-pointer'>Thuê Nhà Nguyên Căn</p>
-          </div>
-        </nav>
-      </div>
-    </div>
-  );
-};
+// src/components/Navbar.js
+import React, { useState } from "react";
 
-export default Navigation;
+function Navbar() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  return (
+    <nav className="bg-gray-800 p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="text-white font-semibold text-xl">Navbar</div>
+        <div className="hidden md:block">
+          <ul className="space-x-4">
+            <li className="inline">
+              <a href="#" className="text-white hover:text-gray-400">
+                Home
+              </a>
+            </li>
+            
+            <li className="inline">
+              <a href="#" className="text-white hover:text-gray-400">
+                About
+              </a>
+            </li>
+            <li className="inline">
+              <a href="#" className="text-white hover:text-gray-400">
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="md:hidden">
+          <button
+            className="relative text-white hover:text-gray-400 focus:outline-none"
+            onClick={toggleDropdown}
+          >
+            Menu
+          </button>
+          {isDropdownOpen && (
+            <ul className="absolute mt-2 bg-gray-800 text-white">
+              <li className="py-2 px-4 hover:bg-gray-700">Home</li>
+              <li className="py-2 px-4 hover:bg-gray-700">About</li>
+              <li className="py-2 px-4 hover:bg-gray-700">Contact</li>
+            </ul>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export default Navbar;
+

@@ -32,5 +32,21 @@
     width: 300px;
     display: block;/* Đặt z-index thấp hơn để InfoUser nằm dưới Navigation */
   }
+  /* Trong tệp CSS của bạn (ví dụ: styles.css) */
+.menu {
+  position: absolute;
+  top: 100%; /* Đặt vị trí dưới thanh navbar */
+  left: 0;
+  width: 200px; /* Đặt kích thước của menu */
+  background-color: #333; /* Màu nền của menu */
+  border: 1px solid #555; /* Viền của menu */
+  border-top: none; /* Loại bỏ viền phía trên */
+  display: none; /* Mặc định là ẩn menu */
+}
+
+.menu.active {
+  display: block; /* Hiển thị menu khi có class 'active' */
+}
+
   
   
