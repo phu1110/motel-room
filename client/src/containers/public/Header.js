@@ -1,12 +1,11 @@
 import React, { useCallback} from 'react';
 import { path } from '../../ultils/constants';
-import logo from '../../assets/images/logo-phongtro.svg';
 import { useNavigate } from 'react-router-dom';
 import icons from '../../ultils/icons';
 import { Button } from '../../components';
 import '../../assets/css/style.css';
 const { AiOutlinePlusCircle } = icons;
-const Header = ({ isHidden }) => {
+const Header = () => {
   const navigate = useNavigate();
   const goLogin = useCallback(() => {
     navigate(path.LOGIN);
@@ -22,13 +21,12 @@ const Header = ({ isHidden }) => {
   }, [navigate]);
   
   return (
-    <div >
-      <div className="header w-1100">
+    <div className='w-full'>
+      <div className="header ">
       <div className='w-full flex items-center justify-between bg-primary'>
       <p
       className="w-[240px] h-[70px] flex items-center text-3xl italic justify-center cursor-pointer "
-      onClick={goHome}
-    >
+      onClick={goHome}>
       Trọ Tốt
     </p>
         <div className='flex items-center gap-1'>

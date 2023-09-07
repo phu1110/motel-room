@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Login, Main, Home,Productdetails,Register,Post,PostNew } from '../../client/src/containers/public';
+import { Login, Main, Home,Productdetails,Register,Post,PostNew,NewsManager } from '../../client/src/containers/public';
 import { path } from '../../client/src/ultils/constants';
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
         </Route>
         <Route path={path.POST} element={<Post/>} >
         <Route index element={<PostNew />} />
+        <Route path={path.NEWSMANAGER} element={<NewsManager />} />
           </Route>
         
       </Routes>
