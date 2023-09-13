@@ -58,7 +58,14 @@ const Search = styled(AiOutlineSearch)`
     color: purple; // Thay đổi màu khi hover
   }
 `;
-
+const FooterContainer = styled.div`
+  border: 1px solid #ccc;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+`;
 const Footer = () => {
   const navigate = useNavigate()
   const goHome = useCallback(() => {
@@ -66,7 +73,8 @@ const Footer = () => {
   }, [navigate]);
   return (
     <div className="border border-solid w-full">
-      <div className="w-full h-[400px] flex justify-evenly ">
+      <FooterContainer>
+        <div className="w-full h-[400px] flex justify-evenly ">
         <div className="about ml-[50px]">
           <div>
             <h2 className="font-sans text-3xl m-[20px]"> Thông Tin Liên Hệ</h2>
@@ -134,6 +142,7 @@ const Footer = () => {
         </div>
         </div>
       </div>
+      </FooterContainer>
     </div>
   );
 };

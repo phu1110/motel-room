@@ -12,7 +12,7 @@ const PostNew = () => {
     return (
         <div className="w-full">
             <div className="w-full flex gap-5">
-                <div className="w-full border border-cyan-500 h-full flex flex-col space-y-4  ">
+                <div className="w-full  h-full flex flex-col space-y-4  ">
                     <div className="ml-[50px]">
                         <p className="text-4xl font-semibold"> Đăng tin mới </p>
                     </div>
@@ -88,7 +88,7 @@ const PostNew = () => {
                             type="text"
                             className="placeholder:italic placeholder:text-bla block bg-white w-[300px] border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                             placeholder={User}
-                            readOnly="true"
+                            readOnly={true}
                         ></input>
                     </div>
                     <div className="ml-[50px] flex  flex-col space-y-4 ">
@@ -97,7 +97,7 @@ const PostNew = () => {
                             type="text"
                             className="placeholder:italic placeholder:text-black block bg-white w-[300px] border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
                             placeholder={Phone}
-                            readOnly="true"
+                            readOnly={true}
                         ></input>
                     </div>
                     <div className="ml-[50px] flex  flex-col space-y-4 ">
@@ -133,9 +133,9 @@ const PostNew = () => {
                 <button type="submit" className="ml-[50px]  bg-sky-500 text-white py-2 px-4 w-[100px] rounded-md hover:bg-sky-600">
                     Gửi
                 </button></div>
-                <div className=" bg-yellow-200 w-1/4 h-[500px] mr-[200px]">
-                <div class="card-body ml-[15px] md:w-full">
-                        <p class="card-title text-xl">Lưu ý khi đăng tin</p>
+                <div className=" bg-yellow-200 w-full max-w-[400px] h-full mr-[200px]">
+                <div className="card-body ml-[15px] md:w-full">
+                        <p className="card-title text-xl">Lưu ý khi đăng tin</p>
                         <ul>
                             <li className="text-base p-2">Nội dung phải viết bằng tiếng Việt có dấu</li>
                             <li className="text-base p-2">Tiêu đề tin không dài quá 100 kí tự</li>

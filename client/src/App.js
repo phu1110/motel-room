@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Login, Main, Home,Productdetails,Register,Post,PostNew,NewsManager } from '../../client/src/containers/public';
+import { Login, Main, Home,Productdetails,Register,Post,PostNew,NewsManager,ProFile,Payment} from '../../client/src/containers/public';
 import { path } from '../../client/src/ultils/constants';
 
 function App() {
@@ -7,7 +7,6 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />}>
-          {/* Hiển thị cả header và main khi vào trang home */}
           <Route index element={<Main />} />
           <Route path={path.PRODUCT} element={<Productdetails />} />
           <Route path={path.LOGIN} element={<Login />} />
@@ -16,6 +15,8 @@ function App() {
         <Route path={path.POST} element={<Post/>} >
         <Route index element={<PostNew />} />
         <Route path={path.NEWSMANAGER} element={<NewsManager />} />
+        <Route path={path.PROFILE} element={<ProFile />} />
+        <Route path={path.PAYMENT} element={<Payment />} />
           </Route>
         
       </Routes>

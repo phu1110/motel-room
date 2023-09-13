@@ -6,4 +6,6 @@ export const path = {
     POST: 'Post',
     POSTNEW : 'PostNew',
     NEWSMANAGER : 'NewsManager',
+    PROFILE: 'Profile',
+    PAYMENT: 'Payment',
 }
