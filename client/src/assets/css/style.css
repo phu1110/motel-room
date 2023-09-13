@@ -47,6 +47,17 @@
 .menu.active {
   display: block; /* Hiển thị menu khi có class 'active' */
 }
+@media (max-width: 1023px) {
+  .Product {
+    justify-content: flex-start;
+    width: 100%;
+  }
+}
+@media (min-width: 1024px) {
+  .Product {
+    justify-content: space-between;
+  }
+}
 
   
   

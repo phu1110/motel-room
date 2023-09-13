@@ -1,34 +1,61 @@
 // src/components/Navbar.js
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import {path} from '../../ultils/constants';
 
 function Navbar() {
+  const navigate = useNavigate();
+  const goProduct = useCallback(() => {
+    navigate(path.product); // Sử dụng navigate để chuyển đến trang khác
+    setIsDropdownOpen(false); // Đóng menu sau khi chuyển trang
+  }, [navigate]);
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  useEffect(() => {
+    // Hàm xử lý khi cửa sổ thay đổi kích thước
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        // Đóng menu khi kích thước cửa sổ lớn hơn hoặc bằng 768px
+        setIsDropdownOpen(false);
+      }
+    };
+
+    // Đăng ký sự kiện resize
+    window.addEventListener("resize", handleResize);
+
+    // Giải phóng sự kiện khi component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white font-semibold text-xl">Navbar</div>
+    <nav className="bg-cyan-400 p-4">
+      <div className="container mx-auto flex  gap-5 justify-start items-center">
+        <div className="text-white font-semibold text-xl">Trang Chủ</div>
         <div className="hidden md:block">
-          <ul className="space-x-4">
+          <ul className="space-x-4 flex">
             <li className="inline">
-              <a href="#" className="text-white hover:text-gray-400">
-                Home
-              </a>
+              <p onClick={goProduct} className="menu-item text-white hover:text-gray-400 cursor-pointer">
+                Thuê Trọ
+              </p>
             </li>
-            
+
             <li className="inline">
-              <a href="#" className="text-white hover:text-gray-400">
-                About
-              </a>
+              <p onClick={goProduct} className="menu-item text-white hover:text-gray-400 cursor-pointer">
+                Thuê Nhà Nguyên Căn
+              </p>
             </li>
+
             <li className="inline">
-              <a href="#" className="text-white hover:text-gray-400">
-                Contact
-              </a>
+              <p onClick={goProduct} className="menu-item text-white hover:text-gray-400 cursor-pointer">
+                Thuê Căn Hộ
+              </p>
             </li>
           </ul>
         </div>
@@ -40,10 +67,22 @@ function Navbar() {
             Menu
           </button>
           {isDropdownOpen && (
-            <ul className="absolute mt-2 bg-gray-800 text-white">
-              <li className="py-2 px-4 hover:bg-gray-700">Home</li>
-              <li className="py-2 px-4 hover:bg-gray-700">About</li>
-              <li className="py-2 px-4 hover:bg-gray-700">Contact</li>
+            <ul className="absolute mt-2 bg-cyan-400 text-white">
+              <li className="py-2 px-4 hover:bg-cyan-700">
+                <p onClick={goProduct} className="menu-item cursor-pointer">
+                  Thuê Trọ
+                </p>
+              </li>
+              <li className="py-2 px-4 hover:bg-cyan-700">
+                <p onClick={goProduct} className="menu-item cursor-pointer">
+                  Thuê Căn Hộ
+                </p>
+              </li>
+              <li className="py-2 px-4 hover:bg-cyan-700">
+                <p onClick={goProduct} className="menu-item cursor-pointer">
+                  Thuê Nhà Nguyên Căn
+                </p>
+              </li>
             </ul>
           )}
         </div>
@@ -53,4 +92,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
