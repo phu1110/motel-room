@@ -29,7 +29,7 @@ const Home = () => {
       <div className={`navigation-container ${scrolled ? 'fixed-navbar' : ''}`}>
         <Navigation />
       </div>
-      <div className='w-1100 flex flex-col items-center justify-start'>
+      <div className='w-full flex flex-col items-center justify-start'>
         <Outlet />
       </div>
       <Footer />

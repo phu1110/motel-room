@@ -1,10 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-import { Login, Main, Home,Productdetails,Register,Post,PostNew,NewsManager,ProFile,Payment} from '../../client/src/containers/public';
+import { Login, Main, Home,Productdetails,Register,Post,PostNew,NewsManager,ProFile,Payment} from '../../client/src/pages/public';
 import { path } from '../../client/src/ultils/constants';
-
+import { ToastContainer } from 'react-toastify';
 function App() {
   return (
     <div className="App">
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />}>
           <Route index element={<Main />} />
