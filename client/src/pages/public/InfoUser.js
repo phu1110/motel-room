@@ -1,7 +1,8 @@
 import React,{useCallback} from 'react';
-import avatar from '../../assets/images/avatar.jpg';
 import { useNavigate } from "react-router-dom";
 import {path} from '../../ultils/constants'
+import { UserContext } from '../../context/UserContext';
+import { useContext } from 'react';
 const InfoUser = () => {
   const navigate = useNavigate();
   const goEdit = useCallback(() => {
@@ -20,18 +21,20 @@ const InfoUser = () => {
     navigate(path.PAYMENT);
   }, [navigate]);
   const userData = {
-    avatar: avatar,
-    name: 'John Doe',
-    userId: '123456',
     accountBalance: '$500.00'
   };
-
+  const Url = "https://localhost:7139"
+  const {loginContext,user} = useContext(UserContext);
   return (
     <div className='w-[300px]'>
       <div className="flex flex-col items-center p-4">
-        <img className="w-20 h-20 rounded-full mb-4" src={userData.avatar} alt="User Avatar" />
-        <p className="text-lg font-semibold">{userData.name}</p>
-        <p className="text-gray-600 mb-2">ID: {userData.userId}</p>
+        <img
+                                src={`${Url}/${localStorage.getItem('avatar')}`}
+                                className="w-20 h-20 rounded-full mb-4 "
+                                alt="not found"
+                            />
+        {user && user.firstname && user.lastname && <p className="text-lg font-semibold">{user.firstname +" "+user.lastname}</p>}
+        {user && user.userid &&<p className="text-gray-600 mb-2">ID: {user.userid}</p>}
         <p className="text-green-500 font-semibold text-xl">{userData.accountBalance}</p>
         <button className="w-full px-4 py-2 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors" onClick={goPayment}>
           Nạp tiền

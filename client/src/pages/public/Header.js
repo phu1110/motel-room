@@ -1,10 +1,11 @@
-import React, { useCallback} from 'react';
+import React, { useCallback,useState} from 'react';
 import { path } from '../../ultils/constants';
 import { useNavigate } from 'react-router-dom';
 import icons from '../../ultils/icons';
-import { Button } from '../../components';
+import { Button,Dropdown } from '../../components';
 import '../../assets/css/style.css';
-const { AiOutlinePlusCircle } = icons;
+import { UserContext } from '../../context/UserContext';
+import { useContext } from 'react'; 
 const Header = () => {
   const navigate = useNavigate();
   const goLogin = useCallback(() => {
@@ -19,7 +20,7 @@ const Header = () => {
   const goHome = useCallback(() => {
     navigate('/');
   }, [navigate]);
-  
+  const {loginContext,user} = useContext(UserContext);
   return (
     <div className='w-full'>
       <div className="header ">
@@ -31,9 +32,13 @@ const Header = () => {
     </p>
         <div className='flex items-center gap-1'>
           <small>Tìm kiếm vui vẻ - Thuê trọ chất lượng, giá hợp lý!</small>
-          <Button text={'Đăng nhập'} textColor='text-white' bgColor='bg-[#3961fb]' onClick={goLogin}></Button>
-          <Button text={'Đăng kí'} textColor='text-white' bgColor='bg-[#3961fb]' onClick={goRegister}></Button>
-          <Button text={'Đăng tin mới'} textColor='text-white' bgColor='bg-[#F73859]' BsPlus={AiOutlinePlusCircle} onClick={goPost}></Button>
+          { user && user.auth === true  
+           ?<Dropdown/>:
+           <Button text={'Đăng nhập'} textColor='text-white' bgColor='bg-[#3961fb]' onClick={goLogin}></Button>
+
+          }
+          {/* <Button text={'Đăng kí'} textColor='text-white' bgColor='bg-[#3961fb]' onClick={goRegister}></Button> */}
+          
         </div>
       </div>
       </div>

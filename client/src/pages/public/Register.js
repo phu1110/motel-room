@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from "react";
 import { Button, InputForm } from "../../components";
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
@@ -54,12 +53,17 @@ const Register = () => {
       if (response.status === 200) {
         toast.success('Đăng kí thành công!');
         // Thực hiện các hành động khác sau khi thêm người dùng thành công.
-      } else {
-        toast.error('Đăng kí thất bại');
-        // Xử lý lỗi nếu có.
       }
     } catch (error) {
-      console.error('Error:', error);
+      // const error = response.data.phone[0];
+      if (error.response && error.response.data && error.response.data.phone && error.response.data.phone[0]) {
+        const errorMessage = error.response.data.phone[0];
+        toast.error(errorMessage);
+    } else {
+        toast.error('Đăng kí thất bại');
+        console.error('Error:', error);
+    }
+      
     }
     setLoading(false)
   };
