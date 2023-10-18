@@ -1,23 +1,58 @@
 import React, { memo,useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { getPost } from '../api/api';
+import { image } from '../api/URL';
 
 const List = ({ images, link, content, description, price, acreage, address, time, phone }) => {
-  const [roomList, setRoomList] = useState([
-
-  ]);
-
-useEffect(() => {
-  axios.get('https://localhost:7199/api/Room/get-all-room')
-    .then((response) => {
-      setRoomList(response.data); // Lưu danh sách các phòng vào state
-      console.log(response.data);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [roomList, setRoomList] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [hireState, setHireState] = useState(null);
+  const [statusState, setstatusState] = useState(null);
+  const [minPrice, setminPrice] = useState(null);
+  const [maxPrice, setmaxPrice] = useState(null);
+  const [minArea, setminArea] = useState(null);
+  const [maxArea, setmaxArea] = useState(null);
+  const [category, setcategory] = useState(null);
+  const [isVip, setisVip] = useState(null);
+  const [sortBy, setsortBy] = useState(null);
+  const [isAscending, setAscending] = useState(null);
+  const loadPostVip = async () => {
+    const vipData = {
+      hireState : 'Chưa Được Thuê',
+      statusState : 'Đã Duyệt',
+      isVip : 'Hạng Vip',
+      sortBy: 'dateCreated',
+      isAscending : true,
+      minPrice : 0,
+      maxPrice: 0,
+      minArea: 0,
+      maxArea: 0,
+      category: 0,
+      pageNumber: page,
+      pageSize: pageSize
+    };
+    setHireState('Chưa Được Thuê');
+    setstatusState('Đã Duyệt')
+    setminPrice(null);
+    setmaxPrice(null);
+    setminArea(null);
+    setmaxArea(null);
+    setcategory(null);
+    setisVip('Hạng Vip');
+    setsortBy('dateCreated');
+    setAscending(true);
+    await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, page, pageSize)
+    .then(apiData => {
+        setRoomList(apiData.data.post);
+        setTotalCount(apiData.data.total);
+        console.log(apiData);
     })
-    .catch((error) => {
-      console.error(error);
-    });
-}, []);
-const hostUrl = 'https://localhost:7199/';
+}
+useEffect(() => {
+  loadPostVip();
+}, [hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, page, pageSize]);
   return (
     <div>
     {roomList.map((room) => (
@@ -28,7 +63,7 @@ const hostUrl = 'https://localhost:7199/';
         <div className="border border-black object-cover rounded-lg h-[160px]">
   {room.actualFile ? (
     <img
-      src={`${hostUrl}/${room.actualFile}`}
+      src={`${image}/${room.actualFile}`}
       className="w-full h-full"
       alt="Biểu trưng ABC Corp"
     />
@@ -58,7 +93,7 @@ const hostUrl = 'https://localhost:7199/';
             </p>
           </div>
           <div className="hidden lg:flex">
-            <p className="Time ml-auto">{time}</p>
+            <p className="Time ml-auto">{room.formattedDatecreated}</p>
           </div>
         
           <style>
@@ -78,7 +113,7 @@ const hostUrl = 'https://localhost:7199/';
              {room.authorname}
             </p>
             <div className="text-right">
-              <p>{phone}</p>
+              <p>{room.phone}</p>
               <button className="mt-2 lg:mt-0">Nhắn tin</button>
             </div>
           </div>

@@ -41,8 +41,7 @@ const Main = () => {
         </div>
         <div style={{ width: '94%', height: '1px', backgroundColor: 'black' }} className="mb-2 mx-auto"></div>
         <div className="m-4">
-          <SanPham images={anhtro} link={goProduct} 
-          >
+          <SanPham link={goProduct}>
           </SanPham>
           
 
