@@ -1,49 +1,24 @@
 import React, { memo,useEffect, useState } from 'react';
-import axios from 'axios';
 import { getPost } from '../api/api';
 import { image } from '../api/URL';
 
-const List = ({ images, link, content, description, price, acreage, address, time, phone }) => {
+const List = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pagesize, setPageSize] = useState(2);
   const [roomList, setRoomList] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
-  const [hireState, setHireState] = useState(null);
-  const [statusState, setstatusState] = useState(null);
-  const [minPrice, setminPrice] = useState(null);
-  const [maxPrice, setmaxPrice] = useState(null);
-  const [minArea, setminArea] = useState(null);
-  const [maxArea, setmaxArea] = useState(null);
-  const [category, setcategory] = useState(null);
-  const [isVip, setisVip] = useState(null);
-  const [sortBy, setsortBy] = useState(null);
-  const [isAscending, setAscending] = useState(null);
-  const loadPostVip = async () => {
-    const vipData = {
-      hireState : 'Chưa Được Thuê',
-      statusState : 'Đã Duyệt',
-      isVip : 'Hạng Vip',
-      sortBy: 'dateCreated',
-      isAscending : true,
-      minPrice : 0,
-      maxPrice: 0,
-      minArea: 0,
-      maxArea: 0,
-      category: 0,
-      pageNumber: page,
-      pageSize: pageSize
-    };
-    setHireState('Chưa Được Thuê');
-    setstatusState('Đã Duyệt')
-    setminPrice(null);
-    setmaxPrice(null);
-    setminArea(null);
-    setmaxArea(null);
-    setcategory(null);
-    setisVip('Hạng Vip');
-    setsortBy('dateCreated');
-    setAscending(true);
-    await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, page, pageSize)
+  const [minPrice, setminPrice] = useState(miPrice);
+  const [maxPrice, setmaxPrice] = useState(maPrice);
+  const [minArea, setminArea] = useState(miArea);
+  const [maxArea, setmaxArea] = useState(maArea);
+  const [category, setcategory] = useState(cate);
+    // const [hireState, setHireState] = useState(null);
+  // const [statusState, setstatusState] = useState(null);
+  // const [isVip, setisVip] = useState(null);
+  // const [sortBy, setsortBy] = useState(null);
+  // const [isAscending, setAscending] = useState(null);
+  const loadPostVip = async (hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize) => {
+    await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize)
     .then(apiData => {
         setRoomList(apiData.data.post);
         setTotalCount(apiData.data.total);
@@ -51,11 +26,18 @@ const List = ({ images, link, content, description, price, acreage, address, tim
     })
 }
 useEffect(() => {
-  loadPostVip();
-}, [hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, page, pageSize]);
+  const hireState = 'Chưa Được Thuê';
+  const statusState = 'Đã Duyệt';
+  const isVip = 'Hạng Vip';
+  const sortBy = 'dateCreated';
+  const isAscending = true;
+  const pageNumber = page;
+  const pageSize = pagesize;
+  loadPostVip(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize);
+}, []);
   return (
     <div>
-    {roomList.map((room) => (
+      {Array.isArray(roomList) && roomList.length > 0 ? (roomList.map((room) => (
       <div key={room.id}>
         <div className="Product static flex flex-col lg:flex-row lg:justify-start my-8 border border-gray-400 rounded-lg ">
       <div className="lg:w-[280px] relative">
@@ -121,7 +103,7 @@ useEffect(() => {
       </div>
     </div>
       </div>
-    ))}
+      ))) : (null)}
   </div>
   );
 };

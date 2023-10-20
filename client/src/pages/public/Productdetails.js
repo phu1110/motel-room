@@ -7,7 +7,7 @@ import 'react-slideshow-image/dist/styles.css'
 import '../../assets/css/slider.css'
 import { TiemKiemGia,TinMoi ,SanPham1} from "../../components";
 const { BsChevronRight } = icons;
-const Productdetails = () => {
+const Productdetails = ({id}) => {
     const images = [anhtro,nha,anhtro];
     return (
         <div className='w-1100 flex justify-between gap-2'>
@@ -61,26 +61,7 @@ const Productdetails = () => {
           </div>
             </div>
             <div className="border border-black rounded-lg mt-[15px]">
-        <SanPham1 images={anhtro} link={'/Product'} content={'Chưa Biết Gì Hết'}
-            address={'Chưa Có Nhà Lấy đâu ra địa chỉ'} price={'1 triệu 5'} acreage={'300 m2'}
-            description={'PHÙ HỢP VỚI SINH VIÊN VÀ NGƯỜI ĐI LÀMĐANG SETUP – 28/08/2023 KHAI TRƯƠNGNgày 15/08 đã bắt đầu nhận khách (khuyến mãi 20%/tháng đầu).- Phong cách thiết…'}
-            phone={'0797878315'} time={'chưa bik'}>
-          </SanPham1>
-        <SanPham1 images={anhtro} link={'/Product'} content={'Chưa Biết Gì Hết'}
-            address={'Chưa Có Nhà Lấy đâu ra địa chỉ'} price={'1 triệu 5'} acreage={'300 m2'}
-            description={'PHÙ HỢP VỚI SINH VIÊN VÀ NGƯỜI ĐI LÀMĐANG SETUP – 28/08/2023 KHAI TRƯƠNGNgày 15/08 đã bắt đầu nhận khách (khuyến mãi 20%/tháng đầu).- Phong cách thiết…'}
-            phone={'0797878315'} time={'chưa bik'}>
-          </SanPham1>
-        <SanPham1 images={anhtro} link={'/Product'} content={'Chưa Biết Gì Hết'}
-            address={'Chưa Có Nhà Lấy đâu ra địa chỉ'} price={'1 triệu 5'} acreage={'300 m2'}
-            description={'PHÙ HỢP VỚI SINH VIÊN VÀ NGƯỜI ĐI LÀMĐANG SETUP – 28/08/2023 KHAI TRƯƠNGNgày 15/08 đã bắt đầu nhận khách (khuyến mãi 20%/tháng đầu).- Phong cách thiết…'}
-            phone={'0797878315'} time={'chưa bik'}>
-          </SanPham1>
-        <SanPham1 images={anhtro} link={'/Product'} content={'Chưa Biết Gì Hết'}
-            address={'Chưa Có Nhà Lấy đâu ra địa chỉ'} price={'1 triệu 5'} acreage={'300 m2'}
-            description={'PHÙ HỢP VỚI SINH VIÊN VÀ NGƯỜI ĐI LÀMĐANG SETUP – 28/08/2023 KHAI TRƯƠNGNgày 15/08 đã bắt đầu nhận khách (khuyến mãi 20%/tháng đầu).- Phong cách thiết…'}
-            phone={'0797878315'} time={'chưa bik'}>
-          </SanPham1>
+        <SanPham1/>
         </div>
           </div>
             <div className='right'>
