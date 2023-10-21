@@ -22,9 +22,8 @@ const List = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
     .then(apiData => {
         setRoomList(apiData.data.post);
         setTotalCount(apiData.data.total);
-        console.log(apiData);
     })
-}
+  }
 useEffect(() => {
   const hireState = 'Chưa Được Thuê';
   const statusState = 'Đã Duyệt';

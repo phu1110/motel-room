@@ -12,7 +12,6 @@ export const NewList = ({images,title,price,date}) => {
       .then(apiData => {
         setRoomList(apiData.data.post);
         setTotalCount(apiData.data.total);
-        console.log(apiData);
       })
   }
   useEffect(() => {
@@ -33,7 +32,7 @@ export const NewList = ({images,title,price,date}) => {
   return (
     <div>
       <h2 className="text-center text-xl font-bold my-4">Tin mới đăng</h2>
-      {roomList.map((room) => (
+      {Array.isArray(roomList) && roomList.length > 0 ? (roomList.map((room) => (
         <div key={room.id}>
           <div className="grid grid-cols gap-2 mx-2">
             <div className="flex items-center rounded-lg justify-center gap-2">
@@ -55,7 +54,7 @@ export const NewList = ({images,title,price,date}) => {
           </div>
           <div style={{ width: '88%', height: '1px', backgroundColor: 'black' }} className="mb-2 mx-auto"></div>
         </div>
-      ))}
+      ))) : (null)}
     </div>
   )
 }

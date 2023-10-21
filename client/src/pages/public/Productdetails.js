@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Slide } from 'react-slideshow-image';
 import anhtro from '../../assets/images/nhanobita.jpg'
 import nha from '../../assets/images/nha.jpg'
@@ -6,15 +6,30 @@ import icons from "../../ultils/icons";
 import 'react-slideshow-image/dist/styles.css'
 import '../../assets/css/slider.css'
 import { TiemKiemGia,TinMoi ,SanPham1} from "../../components";
+import { getPostbyId } from '../../api/api';
+import { image } from '../../api/URL';
 const { BsChevronRight } = icons;
 const Productdetails = ({id}) => {
+  const [roomData, setRoomData] = useState([]);
+  const [actualFile, setactualFile] = useState('');
     const images = [anhtro,nha,anhtro];
+    const loadPostid = async (id) => {
+      await getPostbyId(id).then(apidata => {
+        setRoomData(apidata.data);
+        setactualFile(apidata.data.actualFile);
+        console.log(apidata);
+      })
+    }
+    useEffect(() => {
+      loadPostid(4);
+    }, [])
+    const imagePaths = actualFile.split(';');
     return (
         <div className='w-1100 flex justify-between gap-2'>
           <div>
           <div className='left w-[750px] h-[1000px] border border-black rounded-lg overflow-auto'>
-            <Slide >
-            <div className="each-slide-effect">
+            <Slide images={imagePaths}>
+            {/* <div className="each-slide-effect">
                 <div style={{ 'backgroundImage': `url(${images[0]})` }}>
                     
                 </div>
@@ -26,7 +41,12 @@ const Productdetails = ({id}) => {
             <div className="each-slide-effect">
                 <div style={{ 'backgroundImage': `url(${images[2]})` }}>
                 </div>
-            </div>
+            </div> */}
+            {imagePaths.map((imagePath, index) => (
+          <div key={index} className="each-slide-effect">
+            <div style={{ backgroundImage: `https://localhost:7139/(${imagePath})` }}></div>
+          </div>
+            ))}
           </Slide>
           <div className='ml-[15px]'>
           <p className='text-pink-400 text-3xl cursor-pointer'>nhà trọ nhưng không phải là nhà trọ aaaaaaaaaaaaaaaaa

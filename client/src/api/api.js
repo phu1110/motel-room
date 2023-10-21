@@ -55,3 +55,9 @@ export const getPost = (hireState,statusState,minPrice,maxPrice,minArea,maxArea,
     `${API_BASE_URL}/Post/Get-all-post?${queryString}`
   );
 };
+
+export const getPostbyId = (id) => {
+  return axios.get(
+    `${API_BASE_URL}/Post/Get-post-by-id?id=${id}`
+  );
+}

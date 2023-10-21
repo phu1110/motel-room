@@ -17,7 +17,6 @@ const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
     .then(apiData => {
         setRoomList(apiData.data.post);
         setTotalCount(apiData.data.total);
-        console.log(apiData);
     })
   }
   useEffect(() => {
