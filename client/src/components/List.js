@@ -1,26 +1,42 @@
 import React, { memo,useEffect, useState } from 'react';
-import axios from 'axios';
+import { getPost } from '../api/api';
+import { image } from '../api/URL';
 
-
-const List = ({ images, link, content, description, price, acreage, address, time, phone }) => {
-  const [roomList, setRoomList] = useState([
-
-  ]);
-
-useEffect(() => {
-  axios.get('https://localhost:7199/api/Room/get-all-room')
-    .then((response) => {
-      setRoomList(response.data); // Lưu danh sách các phòng vào state
-      console.log(response.data);
+const List = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
+  const [page, setPage] = useState(1);
+  const [pagesize, setPageSize] = useState(2);
+  const [roomList, setRoomList] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [minPrice, setminPrice] = useState(miPrice);
+  const [maxPrice, setmaxPrice] = useState(maPrice);
+  const [minArea, setminArea] = useState(miArea);
+  const [maxArea, setmaxArea] = useState(maArea);
+  const [category, setcategory] = useState(cate);
+    // const [hireState, setHireState] = useState(null);
+  // const [statusState, setstatusState] = useState(null);
+  // const [isVip, setisVip] = useState(null);
+  // const [sortBy, setsortBy] = useState(null);
+  // const [isAscending, setAscending] = useState(null);
+  const loadPostVip = async (hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize) => {
+    await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize)
+    .then(apiData => {
+        setRoomList(apiData.data.post);
+        setTotalCount(apiData.data.total);
     })
-    .catch((error) => {
-      console.error(error);
-    });
+  }
+useEffect(() => {
+  const hireState = 'Chưa Được Thuê';
+  const statusState = 'Đã Duyệt';
+  const isVip = 'Hạng Vip';
+  const sortBy = 'dateCreated';
+  const isAscending = true;
+  const pageNumber = page;
+  const pageSize = pagesize;
+  loadPostVip(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize);
 }, []);
-const hostUrl = 'https://localhost:7199/';
   return (
     <div>
-    {roomList.map((room) => (
+      {Array.isArray(roomList) && roomList.length > 0 ? (roomList.map((room) => (
       <div key={room.id}>
         <div className="Product static flex flex-col lg:flex-row lg:justify-start my-8 border border-gray-400 rounded-lg ">
       <div className="lg:w-[280px] relative">
@@ -28,7 +44,7 @@ const hostUrl = 'https://localhost:7199/';
         <div className="border border-black object-cover rounded-lg h-[160px]">
   {room.actualFile ? (
     <img
-      src={`${hostUrl}/${room.actualFile}`}
+      src={`${image}/${room.actualFile}`}
       className="w-full h-full"
       alt="Biểu trưng ABC Corp"
     />
@@ -58,7 +74,7 @@ const hostUrl = 'https://localhost:7199/';
             </p>
           </div>
           <div className="hidden lg:flex">
-            <p className="Time ml-auto">{time}</p>
+            <p className="Time ml-auto">{room.formattedDatecreated}</p>
           </div>
         
           <style>
@@ -78,7 +94,7 @@ const hostUrl = 'https://localhost:7199/';
              {room.authorname}
             </p>
             <div className="text-right">
-              <p>{phone}</p>
+              <p>{room.phone}</p>
               <button className="mt-2 lg:mt-0">Nhắn tin</button>
             </div>
           </div>
@@ -86,7 +102,7 @@ const hostUrl = 'https://localhost:7199/';
       </div>
     </div>
       </div>
-    ))}
+      ))) : (null)}
   </div>
   );
 };

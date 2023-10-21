@@ -8,4 +8,5 @@ export const path = {
     NEWSMANAGER : 'NewsManager',
     PROFILE: 'Profile',
     PAYMENT: 'Payment',
+    MAINSORT : 'MainSort'
 }

@@ -1,16 +1,30 @@
-import React,{useCallback, useState} from "react";
+import React,{useCallback} from "react";
 import anhtro from "../../assets/images/nhanobita.jpg";
 import icons from "../../ultils/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import {path} from '../../ultils/constants';
 import { TiemKiemGia, SanPham,TinMoi,SanPham1,Button} from "../../components";
 const { BsChevronRight } = icons;
-const Main = () => {
+
+const MainSort = () => {
+  const location = useLocation();
   const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const minPrice = searchParams.get("minPrice") ?? null;
+  const maxPrice = searchParams.get("maxPrice") ?? null;
+  const minArea = searchParams.get("minArea") ?? null;
+  const maxArea = searchParams.get("maxArea") ?? null;
+  const category = searchParams.get("category") ?? null;
   const goProduct = useCallback(() => {
     navigate(path.PRODUCT);
   }, [navigate]);
   const goMainSort = useCallback((minPrice, maxPrice, minArea, maxArea, category) => {
+    // if (minPrice) searchParams.set("minPrice", minPrice);
+    // if (maxPrice) searchParams.set("maxPrice", maxPrice);
+    // if (minArea) searchParams.set("minArea", minArea);
+    // if (maxArea) searchParams.set("maxArea", maxArea);
+    // if (category) searchParams.set("category", category);
+    // const updatedQueryString = searchParams.toString();
     const queryParams = {};
     if (minPrice) queryParams.minPrice = minPrice;
     if (maxPrice) queryParams.maxPrice = maxPrice;
@@ -20,7 +34,7 @@ const Main = () => {
     const queryString = Object.keys(queryParams)
       .map((key) => `${key}=${queryParams[key]}`)
       .join("&");
-    navigate(`${path.MAINSORT}?${queryString}`);
+    navigate(`${location.pathname}?${queryString}`);
   }, [navigate]);
   return (
     <div className="flex justify-between  w-1100 ">
@@ -52,11 +66,13 @@ const Main = () => {
         </div>
         <div style={{ width: '94%', height: '1px', backgroundColor: 'black' }} className="mb-2 mx-auto"></div>
         <div className="m-4">
-          <SanPham link={goProduct}/>
+          <SanPham link={goProduct} miPrice={minPrice} maPrice={maxPrice} miArea={minArea} maArea={maxArea} cate={category}/>
+          {/* <SanPham link={goProduct}/> */}
         </div>
         </div>
         <div className="border border-black rounded-lg ">
-          <SanPham1/>
+          {/* <SanPham1 miPrice={minPrice} maPrice={maxPrice} miArea={minArea} maArea={maxArea} cate={category}/> */}
+          <SanPham1 link={goProduct} miPrice={minPrice ?? null} maPrice={maxPrice?? null} miArea={minArea?? null} maArea={maxArea?? null} cate={category}/>
         </div>
       </div>
       <div className="right flex flex-col gap-4 lg:block hidden ">
@@ -92,4 +108,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainSort;
