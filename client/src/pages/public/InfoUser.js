@@ -26,7 +26,7 @@ const InfoUser = () => {
   const Url = "https://localhost:7139"
   const {loginContext,user} = useContext(UserContext);
   return (
-    <div className='w-[300px]'>
+    <div className='w-[300px] h-screen min-h-[1000px]'>
       <div className="flex flex-col items-center p-4">
         <img
                                 src={`${Url}/${localStorage.getItem('avatar')}`}
