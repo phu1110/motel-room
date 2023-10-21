@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
+import { getUserData } from '../../api/api.js';
 import moment from 'moment';
 function TruncatedText({ text, maxLength }) {
   if (text.length <= maxLength) {
@@ -24,30 +25,18 @@ const NewsManager = () => {
   const toggleForm = () => {
     setShowForm(!showForm);
   };
-
-  const apiUrl = 'https://localhost:7139/api/User/get-user-with-id';
-  const userId = localStorage.getItem('userid');
-  const url = 'https://localhost:7139/'
-  if (userId) {
-    // Tạo URL hoàn chỉnh với userId
-    const fullUrl = `${apiUrl}?id=${userId}`;
-
-    // Gửi yêu cầu GET đến API
-    axios.get(fullUrl)
-      .then(response => {
-        // Xử lý dữ liệu trả về từ API
-        const userData = response.data;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await getUserData();
         setDetailUser(userData);
-        // Render thông tin người dùng
+      } catch (error) {
+        // Handle errors if needed
+      }
+    };
 
-      })
-      .catch(error => {
-        // Xử lý lỗi nếu có
-        console.error('Error fetching user data:', error);
-      });
-  } else {
-    console.error('userId is not available.');
-  }
+    fetchData();
+  }, []);
   const calculateElapsedTime = (post) => {
     if (post && post.datecreatedroom) {
       const postDate = moment(post.datecreatedroom);
@@ -202,6 +191,7 @@ const NewsManager = () => {
                                     className="h-5 w-5 text-green-700 mx-2 cursor-pointer"
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
+                                    onClick={toggleForm}
                                   >
                                     <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                     <path
