@@ -74,3 +74,22 @@ export const newPost = (formData) => {
 
   return axios.post(`${API_BASE_URL}/Post/add-post`, formData, config);
 }
+
+// const getUserData = async () => {
+//   const userId = localStorage.getItem('userid');
+//   if (userId) {
+//     try {
+//       const fullUrl = `${apiUrl}?id=${userId}`;
+//       const response = await axios.get(fullUrl);
+//       return response.data;
+//     } catch (error) {
+//       console.error('Error fetching user data:', error);
+//       throw error;
+//     }
+//   } else {
+//     console.error('userId is not available.');
+//     return null;
+//   }
+// };
+
+// export { getUserData };
