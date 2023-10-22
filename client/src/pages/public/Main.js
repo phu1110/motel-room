@@ -57,7 +57,7 @@ const Main = () => {
           <SanPham1/>
         </div>
       </div>
-      <div className="right grid grid-row-3 gap-4  ">
+      <div className="right flex flex-col gap-4  ">
         <div className="w-[340px] border border-black h-[380px] rounded-lg">
           <h2 className="text-center text-xl font-bold my-4">Tìm theo giá</h2>
           <div className="grid grid-cols-2 gap-4">
@@ -82,7 +82,7 @@ const Main = () => {
             <TiemKiemGia link={() => goMainSort(null,null,90,99999, null)} Icons={BsChevronRight} text={'Trên 90m'}></TiemKiemGia>
           </div>
         </div>
-        <div className="w-[340px] border border-black rounded-lg ">
+        <div className="w-[340px]  border border-black rounded-lg ">
         <TinMoi images={anhtro}/>
         </div>
       </div>

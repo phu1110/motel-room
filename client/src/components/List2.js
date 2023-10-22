@@ -4,7 +4,7 @@ import { image } from '../api/URL';
 import moment from 'moment';
 const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
   const [page, setPage] = useState(1);
-  const [pagesize, setPageSize] = useState(4);
+  const [pagesize, setPageSize] = useState(6);
   const [roomList, setRoomList] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [minPrice, setminPrice] = useState(miPrice);

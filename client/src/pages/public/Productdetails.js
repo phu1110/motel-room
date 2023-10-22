@@ -2,35 +2,28 @@ import React, {useEffect, useState} from 'react'
 import { Slide } from 'react-slideshow-image';
 import { useParams } from 'react-router-dom';
 import anhtro from '../../assets/images/nhanobita.jpg'
+import nha from '../../assets/images/nha.jpg'
 import notfound from '../../assets/images/not_found.png'
 import icons from "../../ultils/icons";
-import 'react-slideshow-image/dist/styles.css'
 import '../../assets/css/slider.css'
 import { TiemKiemGia,TinMoi ,SanPham1} from "../../components";
 import { detailPost } from '../../api/api';
-
+import { image } from '../../api/URL';
 import moment from 'moment';
 const { BsChevronRight } = icons;
 const Productdetails = () => {
+  const images = [anhtro,nha,anhtro];
   const { id } = useParams();
   const [roomData, setRoomData] = useState([]);
   const [actualFile, setactualFile] = useState('');
-  
-    const images = [notfound];
-    // const loadPostid = async (id) => {
-    //   await detailPost(id).then(apidata => {
-    //     setRoomData(apidata.data);
-    //    
-    //     console.log(apidata);
-    //   })
-    // }
+    // const images = [notfound];
+    
     useEffect(() => {
       const fetchTierDetails = async () => {
           try {
               const response = await detailPost(id);
               // Lưu thông tin người dùng vào state
               setRoomData(response.data);
-              console.log(response.data);
               setactualFile(response.data.actualFile);
           } catch (error) {
               console.error('Error fetching user details:', error);
@@ -38,28 +31,22 @@ const Productdetails = () => {
           
       };
 
-      // Gọi hàm để lấy chi tiết người dùng khi component được tạo ra
       fetchTierDetails();
-  }, [id]);
-  const imagePaths = actualFile ? actualFile.split(';') : [];
+    }, [id]);
+    const imagePaths = actualFile ? actualFile.split(';').filter(path => path.trim() !== '').map(path => path.replace(/\\/g, '/')) : [];
+    const completePaths = imagePaths.map(imagePath => `${image}/${imagePath}`);
     return (
-        <div className='w-1100 flex justify-between gap-2'>
-          <div>
-          <div className='left w-[750px]min-h-[1px] border border-black rounded-lg overflow-auto'>
-            <Slide images={imagePaths}>
-            {imagePaths ? (
-  imagePaths.map((imagePath, index) => (
+      <div className='w-1100 flex justify-between gap-2'>
+      <div>
+      <div className='left max-w-[700px] min-h-[1px] border border-black rounded-lg '>
+        <Slide >
+        {completePaths.map((completePath, index) => (
     <div key={index} className="each-slide-effect">
-      <div style={{ backgroundImage: `https://localhost:7139/${imagePath}` }}></div>
+      <div style={{ 'backgroundImage': `url(${completePath})` }}></div>
     </div>
-  ))
-) : (
-  <div className="each-slide-effect">
-    <div style={{ backgroundImage: notfound }}></div>
-  </div>
-)}
-
-          </Slide>
+  ))}
+      </Slide>
+          
           {roomData ? (
           <div className='ml-[15px]'>
           <div  className="each-slide-effect">
@@ -86,16 +73,15 @@ const Productdetails = () => {
             <div className='ml-[25px]'>
             {roomData.description && (
   <div>
-    <p className='text-2xl ml-[5px]'>Thông Tin Mô Tả</p>
     {roomData.description.split('.').map((sentence, index) => (
-      <p className='text-violet-400 py-[4px] ' key={index}>{sentence.trim()}</p>
+      <p className='text-violet-400 py-[4px] ' key={index}>-{sentence.trim()}</p>
     ))}
   </div>
 )}
 
             </div>
           </div>
-            </div>
+            </div> 
             <div className="border border-black rounded-lg mt-[15px]">
         <SanPham1/>
         </div>
