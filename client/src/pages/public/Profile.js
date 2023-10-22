@@ -1,12 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import avatar from '../../assets/images/avatar.jpg';
+import { UserContext } from '../../context/UserContext';
 const Profile = () => {
+  const {user} = useContext(UserContext);
   const userData = {
-    avatar:avatar,
-    name: 'John Doe',
-    userId: '123456',
+    avatar: avatar,
+    name: user.firstname + " " + user.lastname,
+    userId: user.userId,
     accountBalance: '$500.00',
-    phone: '0797878315',
+    phone: user.userphone,
   };
   return (
     <div className='flex min-h-screen flex-col  bg-white p-16'>

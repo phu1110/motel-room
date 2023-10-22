@@ -61,3 +61,16 @@ export const getPostbyId = (id) => {
     `${API_BASE_URL}/Post/Get-post-by-id?id=${id}`
   );
 }
+export const getCategory = () => {
+  return axios.get(`${API_BASE_URL}/Category/get-all-category`);
+}
+export const newPost = (formData) => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data', // Set the content type to multipart/form-data
+      'accept': '*',
+    },
+  };
+
+  return axios.post(`${API_BASE_URL}/Post/add-post`, formData, config);
+}
