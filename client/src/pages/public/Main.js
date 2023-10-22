@@ -4,12 +4,10 @@ import icons from "../../ultils/icons";
 import { useNavigate } from "react-router-dom";
 import {path} from '../../ultils/constants';
 import { TiemKiemGia, SanPham,TinMoi,SanPham1,Button} from "../../components";
+
 const { BsChevronRight } = icons;
 const Main = () => {
   const navigate = useNavigate();
-  const goProduct = useCallback(() => {
-    navigate(path.PRODUCT);
-  }, [navigate]);
   const goMainSort = useCallback((minPrice, maxPrice, minArea, maxArea, category) => {
     const queryParams = {};
     if (minPrice) queryParams.minPrice = minPrice;
@@ -24,7 +22,7 @@ const Main = () => {
   }, [navigate]);
   return (
     <div className="flex justify-between  w-1100 ">
-      <div className="left w-[740px]  mx-auto lg:mx-0">
+      <div className="left w-[740px]  lg:mx-0 flex flex-col gap-6 border border-black p-4 rounded-lg h-full min-h-[1px]">
         <div className="border border-black rounded-lg ">
         <h2 className="font-bold ml-[5px]">Danh Sách Đăng Tin</h2>
         <div className="arrange flex justify-betwen items-center ml-[15px]">
@@ -52,14 +50,14 @@ const Main = () => {
         </div>
         <div style={{ width: '94%', height: '1px', backgroundColor: 'black' }} className="mb-2 mx-auto"></div>
         <div className="m-4">
-          <SanPham link={goProduct}/>
+          <SanPham />
         </div>
         </div>
-        <div className="border border-black rounded-lg ">
+        <div className="border border-black rounded-lg mb-6 ">
           <SanPham1/>
         </div>
       </div>
-      <div className="right flex flex-col gap-4 lg:block hidden ">
+      <div className="right grid grid-row-3 gap-4  ">
         <div className="w-[340px] border border-black h-[380px] rounded-lg">
           <h2 className="text-center text-xl font-bold my-4">Tìm theo giá</h2>
           <div className="grid grid-cols-2 gap-4">

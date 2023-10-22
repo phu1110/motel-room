@@ -1,7 +1,24 @@
 import React, { memo, useEffect, useState } from 'react';
 import { getPost } from '../api/api';
 import { image } from '../api/URL';
-
+import notfound from '../assets/images/not_found.png';
+import '../assets/css/style.css'
+function TruncatedText({ text, maxLength }) {
+  if (text.length <= maxLength) {
+    return (
+      <td className=" ">
+        {text}
+      </td>
+    );
+  } else {
+    const truncatedText = text.slice(0, maxLength) + "...";
+    return (
+      <td className="">
+        {truncatedText}
+      </td>
+    );
+  }
+}
 export const NewList = ({images,title,price,date}) => {
   const [page, setPage] = useState(1);
   const [pagesize, setPageSize] = useState(10);
@@ -35,18 +52,22 @@ export const NewList = ({images,title,price,date}) => {
       {Array.isArray(roomList) && roomList.length > 0 ? (roomList.map((room) => (
         <div key={room.id}>
           <div className="grid grid-cols gap-2 mx-2">
-            <div className="flex items-center rounded-lg justify-center gap-2">
+            <div className="flex items-center rounded-lg gap-2">
             {room.actualFile ? (<img
                   src={`${image}/${room.actualFile}`}
                   className="w-[65px] h-[65px] rounded-lg"
                   alt="prasetamon"
-                />):(<div className="w-[65px] h-[65px] bg-gray-300"></div>)}
+                />):(<div className="w-[65px] h-[65px] ">
+                  <div className="not-found-image">
+      <img src={notfound} alt='not found'></img>
+    </div>
+                </div>)}
               <div className="Content p-2">
                 <a href="/Product" className=" text-blue-400 hover:text-pink-500">
-                  {room.title}
+                <TruncatedText text={room.description} maxLength={50} />
                 </a>
                 <div className="flex grid grid-cols items-center">
-                  <p className="text-black-500 text-sm">Giá: {room.price}</p>
+                  <p className="text-black-500 text-sm">Giá: {room.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
                   <p className="text-black-500 text-sm">Ngày đăng: {room.formattedDatecreated}</p>
                 </div>
               </div>

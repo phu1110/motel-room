@@ -35,30 +35,30 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-cyan-400 p-4">
+    <nav className="bg-[#1266dd] ">
       <div className="container mx-auto flex  gap-5 justify-start items-center">
         <div className="text-white font-semibold text-xl">Trang Chủ</div>
         <div className="hidden md:block">
-          <ul className="space-x-4 flex">
-            <li className="inline">
-              <p onClick={goProduct} className="menu-item text-white hover:text-gray-400 cursor-pointer">
+          <ul className="space-x-4 flex ">
+            <li className="inline hover:bg-red-600 p-4">
+              <button onClick={goProduct} className="menu-item text-white  cursor-pointer">
                 Thuê Trọ
-              </p>
+              </button>
             </li>
 
-            <li className="inline">
-              <p onClick={goProduct} className="menu-item text-white hover:text-gray-400 cursor-pointer">
+            <li className="inline hover:bg-red-600 p-4">
+              <button onClick={goProduct} className="menu-item text-white  cursor-pointer">
                 Thuê Nhà Nguyên Căn
-              </p>
+              </button>
             </li>
 
-            <li className="inline">
-              <p onClick={goProduct} className="menu-item text-white hover:text-gray-400 cursor-pointer">
+            <li className="inline hover:bg-red-600 p-4">
+              <button onClick={goProduct} className="menu-item text-white  cursor-pointer">
                 Thuê Căn Hộ
-              </p>
+              </button>
             </li>
           </ul>
-        </div>
+        </div> 
         <div className="md:hidden">
           <button
             className="relative text-white hover:text-gray-400 focus:outline-none"

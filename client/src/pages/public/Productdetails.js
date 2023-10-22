@@ -1,82 +1,98 @@
 import React, {useEffect, useState} from 'react'
 import { Slide } from 'react-slideshow-image';
+import { useParams } from 'react-router-dom';
 import anhtro from '../../assets/images/nhanobita.jpg'
-import nha from '../../assets/images/nha.jpg'
+import notfound from '../../assets/images/not_found.png'
 import icons from "../../ultils/icons";
 import 'react-slideshow-image/dist/styles.css'
 import '../../assets/css/slider.css'
 import { TiemKiemGia,TinMoi ,SanPham1} from "../../components";
-import { getPostbyId } from '../../api/api';
-import { image } from '../../api/URL';
+import { detailPost } from '../../api/api';
+
+import moment from 'moment';
 const { BsChevronRight } = icons;
-const Productdetails = ({id}) => {
+const Productdetails = () => {
+  const { id } = useParams();
   const [roomData, setRoomData] = useState([]);
   const [actualFile, setactualFile] = useState('');
-    const images = [anhtro,nha,anhtro];
-    const loadPostid = async (id) => {
-      await getPostbyId(id).then(apidata => {
-        setRoomData(apidata.data);
-        setactualFile(apidata.data.actualFile);
-        console.log(apidata);
-      })
-    }
+  
+    const images = [notfound];
+    // const loadPostid = async (id) => {
+    //   await detailPost(id).then(apidata => {
+    //     setRoomData(apidata.data);
+    //    
+    //     console.log(apidata);
+    //   })
+    // }
     useEffect(() => {
-      loadPostid(4);
-    }, [])
-    const imagePaths = actualFile.split(';');
+      const fetchTierDetails = async () => {
+          try {
+              const response = await detailPost(id);
+              // Lưu thông tin người dùng vào state
+              setRoomData(response.data);
+              console.log(response.data);
+              setactualFile(response.data.actualFile);
+          } catch (error) {
+              console.error('Error fetching user details:', error);
+          }
+          
+      };
+
+      // Gọi hàm để lấy chi tiết người dùng khi component được tạo ra
+      fetchTierDetails();
+  }, [id]);
+  const imagePaths = actualFile ? actualFile.split(';') : [];
     return (
         <div className='w-1100 flex justify-between gap-2'>
           <div>
-          <div className='left w-[750px] h-[1000px] border border-black rounded-lg overflow-auto'>
+          <div className='left w-[750px]min-h-[1px] border border-black rounded-lg overflow-auto'>
             <Slide images={imagePaths}>
-            {/* <div className="each-slide-effect">
-                <div style={{ 'backgroundImage': `url(${images[0]})` }}>
-                    
-                </div>
-            </div>
-            <div className="each-slide-effect">
-                <div style={{ 'backgroundImage': `url(${images[1]})` }}>
-                </div>
-            </div>
-            <div className="each-slide-effect">
-                <div style={{ 'backgroundImage': `url(${images[2]})` }}>
-                </div>
-            </div> */}
-            {imagePaths.map((imagePath, index) => (
-          <div key={index} className="each-slide-effect">
-            <div style={{ backgroundImage: `https://localhost:7139/(${imagePath})` }}></div>
-          </div>
-            ))}
+            {imagePaths ? (
+  imagePaths.map((imagePath, index) => (
+    <div key={index} className="each-slide-effect">
+      <div style={{ backgroundImage: `https://localhost:7139/${imagePath}` }}></div>
+    </div>
+  ))
+) : (
+  <div className="each-slide-effect">
+    <div style={{ backgroundImage: notfound }}></div>
+  </div>
+)}
+
           </Slide>
+          {roomData ? (
           <div className='ml-[15px]'>
-          <p className='text-pink-400 text-3xl cursor-pointer'>nhà trọ nhưng không phải là nhà trọ aaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaa</p>
-          <div className='flex items-center gap-2'>
-          <p className='text-gray-400 text-sm'>chuyên mục :</p>
-          <a href='/Product' className='text-blue-500 hover:text-pink-500'> trọ dỏm</a>
+          <div  className="each-slide-effect">
+             <p className='text-pink-400 text-3xl cursor-pointer'>{roomData.title}</p>
           </div>
           <div className='flex items-center gap-2'>
             <p>Địa chỉ : </p>
-            <p>Nhà Cầu Giấy Phường Chưa Rõ</p>
+            <p>{roomData.address}</p>
           </div>
           <div className='flex items-center gap-6'>
-            <p className='text-xl text-green-300'>3Triệu7 Tháng</p>
-            <p>25 Mét Vuông</p>
-            <p>Hôm Nay</p>
+            <p className='text-xl text-green-300'>{roomData.price}</p>
+            <p>{roomData.area}</p>
+            <p>{roomData.formattedDateapprove}</p>
           </div>
           </div>
+             ) : (
+              <p>Thông tin bài đăng bị lỗi</p>
+          )}
+         
+          
+          
           <div className='mt-[10px]'>
             <p className='text-2xl ml-[5px]'> Thông Tin Mô Tả</p>
             <div className='ml-[25px]'>
-            <p className='text-violet-400 py-[4px] ' >PHÒNG TRỌ MỚI, ĐẸP SỐ 373/1/2a LÝ THƯỜNG KIỆT, GẦN ĐH BÁCH KHOA</p>
-            <p className='text-violet-400 py-[4px] ' >- Phòng nằm ngay trung tâm quận Tân Bình (xem hình thật). HẼM THÔNG, HẼM TO cách ĐƯỜNG LÝ THƯỜNG KIỆT 30m.</p>
-            <p className='text-violet-400 py-[4px] ' >- Nằm cách Trường Đại Học BÁCH KHOA 700m, cách chợ Ông Địa 100m, Nằm sau lưng trường THPT Nguyễn Thái Bình, cách chợ Tân Bình 800m</p>
-            <p className='text-violet-400 py-[4px] ' >- Phòng được ốp lát gạch sạch sẽ , tất cả các phòng đều có Máy lạnh, Quạt hút nhưng Cửa sổ vẫn bao la… nhiều phòng có BAN CÔNG rất thoáng mát.</p>
-            <p className='text-violet-400 py-[4px] ' >- Phòng có Gác lững đẹp nằm ngủ, có kệ Bếp nấu ăn, Toilet đầy đủ thiết bị vệ sinh, nước nóng năng lượng mặt trời</p>
-            <p className='text-violet-400 py-[4px] ' >- Thang máy chất lượng thuận tiện đi lại, Có Camera an ninh quan sát các tầng, khóa vân tay, Sân thượng phơi quần áo có mái che.</p>
-            <p className='text-violet-400 py-[4px] ' >- Internet cáp quang Wifi được lắp đặt từng phòng rất mạnh, cáp Tivi, Pccc tự động</p>
-            <p className='text-violet-400 py-[4px] ' >- Bỏ xe dưới tầng hầm bảo vệ trong coi, rất an ninh không chung chủ.</p>
-            <p className='text-violet-400 py-[4px] ' >- Bảo vệ trong coi 24/24 giúp Bạn có cảm giác an toàn, khóa vân tay giờ giấc tự do.</p>
+            {roomData.description && (
+  <div>
+    <p className='text-2xl ml-[5px]'>Thông Tin Mô Tả</p>
+    {roomData.description.split('.').map((sentence, index) => (
+      <p className='text-violet-400 py-[4px] ' key={index}>{sentence.trim()}</p>
+    ))}
+  </div>
+)}
+
             </div>
           </div>
             </div>
@@ -123,13 +139,12 @@ const Productdetails = ({id}) => {
         </div>
         <div className="border border-black rounded-lg ">
           <TinMoi images={anhtro} title={'Nhà Của thằng này lạ quá ta'} price={'5 triệu'} date={'11/10/2003'}></TinMoi>
-          <TinMoi images={anhtro} title={'Nhà Của thằng này lạ quá ta'} price={'5 triệu'} date={'11/10/2003'}></TinMoi>
-          <TinMoi images={anhtro} title={'Nhà Của thằng này lạ quá ta'} price={'5 triệu'} date={'11/10/2003'}></TinMoi>
-          <TinMoi images={anhtro} title={'Nhà Của thằng này lạ quá ta'} price={'5 triệu'} date={'11/10/2003'}></TinMoi>
+          
         </div>
             </div>
       </div>
         </div>
+ 
     )
 }
 

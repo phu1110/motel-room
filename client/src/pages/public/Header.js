@@ -20,15 +20,15 @@ const Header = () => {
   const goHome = useCallback(() => {
     navigate('/');
   }, [navigate]);
-  const {loginContext,user} = useContext(UserContext);
+  const {user} = useContext(UserContext);
   return (
     <div className='w-full'>
       <div className="header ">
       <div className='w-full flex items-center justify-between bg-primary'>
       <p
-      className="w-[240px] h-[70px] flex items-center text-3xl italic justify-center cursor-pointer "
+      className="w-[240px] h-[70px] flex items-center text-3xl  justify-center cursor-pointer "
       onClick={goHome}>
-      Trọ Tốt
+     <i class="fa-solid fa-house"></i> Trọ Tốt
     </p>
         <div className='flex items-center gap-1'>
           <small>Tìm kiếm vui vẻ - Thuê trọ chất lượng, giá hợp lý!</small>

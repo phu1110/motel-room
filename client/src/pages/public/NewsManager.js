@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from "react";
-import axios from "axios";
 import { getUserData } from '../../api/api.js';
 import moment from 'moment';
 function TruncatedText({ text, maxLength }) {
