@@ -38,7 +38,7 @@ const Productdetails = () => {
     return (
       <div className='w-1100 flex justify-between gap-2'>
       <div>
-      <div className='left max-w-[700px] min-h-[1px] border border-black rounded-lg '>
+      <div className='left max-w-[700px] border border-black rounded-lg '>
         <Slide >
         {completePaths.map((completePath, index) => (
     <div key={index} className="each-slide-effect">
@@ -49,17 +49,17 @@ const Productdetails = () => {
           
           {roomData ? (
           <div className='ml-[15px]'>
-          <div  className="each-slide-effect">
-             <p className='text-pink-400 text-3xl cursor-pointer'>{roomData.title}</p>
+          <div  className="">
+             <p className='text-pink-400 text-2xl font-bold cursor-pointer'>{roomData.title}</p>
           </div>
           <div className='flex items-center gap-2'>
-            <p>Địa chỉ : </p>
+            <p className='font-bold'>Địa chỉ : </p>
             <p>{roomData.address}</p>
           </div>
           <div className='flex items-center gap-6'>
-            <p className='text-xl text-green-300'>{roomData.price}</p>
-            <p>{roomData.area}</p>
-            <p>{roomData.formattedDateapprove}</p>
+            <p className='text-xl text-green-300'>Giá Trọ : {roomData.price}</p>
+            <p className='font-bold'>Diện Tích: {roomData.area}m²</p>
+            <p className='font-bold'>{roomData.formattedDateapprove}</p>
           </div>
           </div>
              ) : (
@@ -69,7 +69,7 @@ const Productdetails = () => {
           
           
           <div className='mt-[10px]'>
-            <p className='text-2xl ml-[5px]'> Thông Tin Mô Tả</p>
+            <p className='text-2xl ml-[5px] font-bold'> Thông Tin Mô Tả</p>
             <div className='ml-[25px]'>
             {roomData.description && (
   <div>

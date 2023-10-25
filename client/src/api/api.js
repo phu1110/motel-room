@@ -83,3 +83,18 @@ export { getUserData };
 export const detailPost = (postId) => {
   return axios.get(`${API_BASE_URL}/Post/Get-post-by-id?id=${postId}`)
 }
+export const PostRoom = (id, {title, description, address, price, area, status, isHire, categoryids})  =>{
+  return axios.put(`${API_BASE_URL}/Post/add-post`, {
+    title: title,
+    description : description,
+    address : address,
+    price : price,
+    area : area,
+    status : status,
+    isHire : isHire,
+    categoryids : categoryids,
+  });
+}
+export const getCategoryData = () => {
+  return axios.get('https://localhost:7139/api/Category/get-all-category');
+}
