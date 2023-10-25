@@ -15,7 +15,7 @@ const InfoUser = () => {
     navigate(path.NEWSMANAGER);
   }, [navigate])
   const goNew = useCallback(() => {
-    navigate('/Post');
+    navigate('/.Post');
   }, [navigate]);
   const goPayment = useCallback(() => {
     navigate(path.PAYMENT);
