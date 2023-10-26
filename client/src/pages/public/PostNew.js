@@ -8,18 +8,19 @@ const PostNew = () => {
     const [Loading, setLoading] = useState(false);
     const [categorys, setCategorys] = useState([]);
     const [formData, setFormData] = useState({
-        title: 'Nhà cho thuê',
+        title: '',
         description: '',
         address: '',
         price: 0,
         area: 0,
-        userId: localStorage.getItem("userid"),
+        //userId: localStorage.getItem("userid"),
         status: "Đang Chờ Duyệt",
         isHire: false,
         fileUri: [],
-        dateCreated: "11/10/2003",
-        categoryIds: []
+        //dateCreated: "11/10/2003",
+        //categoryIds: []
     });
+    const [selectedItems, setSelectedItems] = useState([]);
     const fetchData = async () => {
         try {
             const CategoryResponse = await getCategoryData();
@@ -31,15 +32,19 @@ const PostNew = () => {
     useEffect(() => {
         fetchData();
     }, []);
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+    const handleChange = () => {
+        const selectedItemIds = Object.keys(selectedItems);
+        selectedItems.forEach((itemId) => {
+            console.log(itemId);
+        });
     };
     
 
     const handleCategoryChange = (selectedOptions) => {
-        const selectedIds = selectedOptions.map((option) => option.value);
-        setFormData({ ...formData, categoryIds: selectedIds });
+        // const selectedIds = selectedOptions.map((option) => option.value);
+        // setFormData({ ...formData, categoryIds: selectedIds });
+        const updatedSelectedItems = selectedOptions.map(option => option.id);
+        setSelectedItems(updatedSelectedItems);
       };
       
     const handleFileChange = (e) => {
@@ -56,27 +61,45 @@ const PostNew = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("FormData:", formData);
         setLoading(true);
       
         try {
           const formDataObject = new FormData();
       
-          // Append each key-value pair from formData to formDataObject
-          for (const key in formData) {
-            // Kiểm tra nếu key là 'categoryIds' và giá trị của formData[key] là một mảng
-            if (key === 'categoryIds' && Array.isArray(formData[key])) {
-              // formDataObject sẽ xử lý mảng 'categoryIds' một cách đúng đắn
-              formDataObject.append(key, formData[key]);
-            } else {
-              // Ngược lại, thêm giá trị bình thường vào formDataObject
-              formDataObject.append(key, formData[key]);
-            }
-          }
+        //   // Append each key-value pair from formData to formDataObject
+        //   for (const key in formData) {
+        //     // Kiểm tra nếu key là 'categoryIds' và giá trị của formData[key] là một mảng
+        //     if (key === 'categoryIds' && Array.isArray(formData[key])) {
+        //       // formDataObject sẽ xử lý mảng 'categoryIds' một cách đúng đắn
+        //       formDataObject.append(key, formData[key]);
+        //     } else {
+        //       // Ngược lại, thêm giá trị bình thường vào formDataObject
+        //       formDataObject.append(key, formData[key]);
+        //     }
+        //   }
+        formDataObject.append('title', formData.title);
+        formDataObject.append('address', formData.address);
+        formDataObject.append('description', formData.description);
+        formDataObject.append('area', formData.area);
+        formDataObject.append('price', formData.price);
+        formDataObject.append('userId', localStorage.getItem("userid"));
+        formDataObject.append('status', 'Đang Chờ Duyệt');
+        //formDataObject.append('categoryids', 1);
+        formDataObject.append('isHire', false);
+        selectedItems.forEach((itemId) => {
+            formDataObject.append('categoryids', itemId);
+        });
+        console.log("FormData:", formData);
       
+          const config = {
+            headers: {
+              'Content-Type': 'multipart/form-data', // Set the content type to multipart/form-data
+              'accept': '*',
+            },
+          };
           const response = await axios.post(
             'https://localhost:7139/api/Post/add-post',
-            formDataObject
+            formDataObject, config
           );
       
           if (response.status === 200) {
@@ -142,12 +165,11 @@ const PostNew = () => {
                                             isMulti
                                             name="categoryIds"
                                             className="text-red"
-                                            defaultValue={categorys.filter((option) => formData.categoryIds.includes(option.value))}
+                                            value={categorys.id}
                                             onChange={handleCategoryChange}
-                                            options={categorys.map((option) => ({
-                                                value: option.id,
-                                                label: option.name,
-                                            }))}
+                                            options={categorys}
+                                            getOptionLabel={(option) => option.name}
+                                            getOptionValue={(option) => option.id} 
                                         />
 
                                     </div>
