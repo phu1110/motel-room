@@ -11,7 +11,7 @@ function App() {
     if(localStorage.getItem("token"))
     {
       loginContext(localStorage.getItem("token"),localStorage.getItem("userid"),localStorage.getItem("firstname"),localStorage.getItem("lastname"),localStorage.getItem("role")
-      ,localStorage.getItem("avatar"),localStorage.getItem("userphone")
+      ,localStorage.getItem("avatar"),localStorage.getItem("userphone"),localStorage.getItem("useraddress"),localStorage.getItem("usergender"),localStorage.getItem("birthday")
    );
     }},[])
   return (

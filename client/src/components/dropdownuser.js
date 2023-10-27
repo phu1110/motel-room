@@ -35,7 +35,7 @@ const DropdownUser = () => {
   }, [navigate]);
 
   const goProfile = useCallback(() => {
-    navigate('post/profile');
+    navigate('.Post/Profile');
     setIsOpen(false); // Đóng dropdown sau khi chuyển hướng
   }, [navigate]);
 

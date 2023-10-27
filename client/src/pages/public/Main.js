@@ -46,7 +46,7 @@ const Main = () => {
       <div className="left w-[740px]  lg:mx-0 flex flex-col gap-6 border border-black p-4 rounded-lg h-full min-h-[1px]">
         <div className="border border-black rounded-lg ">
         <h2 className="font-bold ml-[5px]">Danh Sách Đăng Tin</h2>
-        <div className="arrange flex justify-betwen items-center ml-[15px]">
+        {/* <div className="arrange flex justify-betwen items-center ml-[15px]">
           <small> Sắp Xếp : </small>
           <div className="flex justify-between">
             <Button
@@ -68,7 +68,7 @@ const Main = () => {
               textColor={"text-black"}
             />
           </div>
-        </div>
+        </div> */}
         <div style={{ width: '94%', height: '1px', backgroundColor: 'black' }} className="mb-2 mx-auto"></div>
         <div className="m-4">
         <SanPham pageN={page} />

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { API_BASE_URL } from './URL';
-
 export const getPost = (hireState,statusState,minPrice,maxPrice,minArea,maxArea,category,isVip,sortBy,isAscending,pageNumber,pageSize) => {
   const queryParams = [];
   if (hireState !== null && hireState !== undefined) {
@@ -78,6 +77,20 @@ const getUserData = async () => {
     return null;
   }
 };
+export const updateUser = async (userId, formDataObject, config) => {
+  try {
+    const response = await axios.put(
+      `https://localhost:7139/api/User/update-customer?id=${userId}`,
+      formDataObject,
+      config
+    );
+
+    // Assuming your API returns the updated user data
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export { getUserData };
 export const detailPost = (postId) => {
@@ -98,3 +111,6 @@ export const PostRoom = (id, {title, description, address, price, area, status, 
 export const getCategoryData = () => {
   return axios.get('https://localhost:7139/api/Category/get-all-category');
 }
+export const detailUser = (userId) => {
+  return axios.get(`${API_BASE_URL}/User/get-user-with-id?id=${userId}`)
+} 

@@ -1,24 +1,26 @@
 import React from 'react'
 
 
-const UserContext = React.createContext({ userid : '', firstname : '', lastname: '',role: '', avatar: '',userphone:'',auth: false });
+const UserContext = React.createContext({ userid : '', firstname : '', lastname: '',role: '', avatar: '',userphone:'',useraddress:'',usergender:false,birthday:'',auth: false });
 
 
 // @function  UserProvider
 // Create function to provide UserContext
 const UserProvider = ({ children }) => {
 
-  const [user, setUser] = React.useState({ userid : '', firstname : '', lastname: '',role: '', avatar: '',userphone:'',auth: false });
+  const [user, setUser] = React.useState({ userid : '', firstname : '', lastname: '',role: '', avatar: '',userphone:'',useraddress:'',usergender:false,birthday:'',auth: false });
 
-  const loginContext = (token,userid,firstname,lastname,role,avatar,userphone) => {
+  const loginContext = (token,userid,firstname,lastname,role,avatar,userphone,useraddress,usergender,birthday) => {
     setUser((user) => ({
       userid: userid,
       firstname:firstname,
       lastname:lastname,
       role:role,
       avatar:avatar,
-      // path:path,
       userphone:userphone,
+      useraddress:useraddress,
+      usergender:usergender,
+      birthday:birthday,
       auth: true,
     }));
     localStorage.setItem('token',token);
@@ -28,6 +30,9 @@ const UserProvider = ({ children }) => {
     localStorage.setItem('role',role);
     localStorage.setItem('avatar',avatar);
     localStorage.setItem('userphone',userphone);
+    localStorage.setItem('useraddress',useraddress);
+    localStorage.setItem('usergender',usergender);
+    localStorage.setItem('birthday',birthday);
   };
 
   const logout = () => {
@@ -38,6 +43,9 @@ const UserProvider = ({ children }) => {
     localStorage.removeItem('role');
     localStorage.removeItem('avatar');
     localStorage.removeItem('userphone');
+    localStorage.removeItem('useraddress');
+    localStorage.removeItem('usergender');
+    localStorage.removeItem('birthday');
     // localStorage.removeItem('path')
     setUser((user) => ({
       userid : '',
@@ -46,7 +54,9 @@ const UserProvider = ({ children }) => {
       role:'',
       avatar:'',
       userphone:'',
-      // path:'',
+      useraddress:'',
+      usergender:false,
+      birthday:'',
       auth: false,
     }));
   };
