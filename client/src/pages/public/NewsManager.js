@@ -1,6 +1,8 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getUserData } from '../../api/api.js';
 import moment from 'moment';
+import Pagination from "./Pagination.js";
+import notfound from '../../assets/images/not_found.png'
 function TruncatedText({ text, maxLength }) {
   if (text.length <= maxLength) {
     return (
@@ -21,9 +23,13 @@ function TruncatedText({ text, maxLength }) {
 const NewsManager = () => {
   const [showForm, setShowForm] = useState(false);
   const [detailuser, setDetailUser] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedImages, setSelectedImages] = useState([]); 
+  const postsPerPage = 5;
   const toggleForm = () => {
     setShowForm(!showForm);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,6 +42,15 @@ const NewsManager = () => {
 
     fetchData();
   }, []);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = detailuser.posts ? detailuser.posts.slice(indexOfFirstPost, indexOfLastPost) : [];
+
+  const paginate = pageNumber => setCurrentPage(pageNumber);
   const calculateElapsedTime = (post) => {
     if (post && post.datecreatedroom) {
       const postDate = moment(post.datecreatedroom);
@@ -71,6 +86,25 @@ const NewsManager = () => {
       return ""; // or return a default image URL
     }
   };
+
+  
+
+
+  const [editingPost, setEditingPost] = useState(null);
+  const handleFileChange = (e) => {
+    const files = e.target.files;
+    const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+    const selectedValidImages = [];
+
+    for (let i = 0; i < files.length; i++) {
+      if (validImageTypes.includes(files[i].type)) {
+        selectedValidImages.push(files[i]);
+      }
+    }
+
+    setSelectedImages(selectedImages.concat(selectedValidImages));
+  };
   return (
     <div className="">
       {detailuser ? (
@@ -86,7 +120,6 @@ const NewsManager = () => {
                     {detailuser.posts && detailuser.posts.length > 0 ? (
                       <table className="min-w-full">
                         <thead className="bg-white border-b">
-
                           <tr>
                             <th
                               scope="col"
@@ -139,27 +172,35 @@ const NewsManager = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {detailuser.posts.map((post) => (
-                            <tr className="bg-gray-100 border-b">
+                          {currentPosts.map((post) => (
+                            <tr className="bg-gray-100 border-b" key={post.id}>
                               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 {post.id}
                               </td>
                               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                {/* <img
-                            className="w-[80px] h-[60px] "
-                            src="https://randomuser.me/api/portraits/men/1.jpg"
-                            alt="not found"
-                          /> */}
-                          {post.actualFile && (<img
-                                  src={getImageUrl(post.actualFile)}
-                                  className="w-[80px] h-[60px]"
-                                  alt="not found"
-                                />
-                                )}
+                                <div className="w-[80px] h-[60px] border border-gray-300">
+                                  {post.actualFile ? (
+                                    <img
+                                      src={getImageUrl(post.actualFile)}
+                                      className="w-full h-full object-cover"
+                                      alt="not found"
+                                    />
+                                  ) : (
+                                    <img
+                                      src={notfound}
+                                      className="w-full h-full object-cover"
+                                      alt="not found"
+                                    />
+                                  )}
+                                </div>
+
                               </td>
-                              <TruncatedText text={post.title} maxLength={20} />
+
                               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                {post.price}
+                                {post.title}
+                              </td>
+                              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                {post.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                               </td>
                               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                 {calculateElapsedTime(post)}
@@ -168,20 +209,19 @@ const NewsManager = () => {
                                 19/09/2023
                               </td>
                               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                {post.status === 'Đang Chờ Duyệt' ?
+                                {post.status === 'Đang Chờ Duyệt' ? (
                                   <span className="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
                                     Chờ duyệt
                                   </span>
-                                  : post.status === 'Đã Duyệt' ?
-                                    <span className="bg-green-600 text-white py-1 px-3 rounded-full text-xs">
-                                      Đã duyệt
-                                    </span>
-                                    : post.status === 'Không Được Duyệt' ?
-                                      <span className="bg-rose-600 text-white py-1 px-3 rounded-full text-xs">
-                                        Không được duyệt
-                                      </span>
-                                      : null}
-
+                                ) : post.status === 'Đã Duyệt' ? (
+                                  <span className="bg-green-600 text-white py-1 px-3 rounded-full text-xs">
+                                    Đã duyệt
+                                  </span>
+                                ) : post.status === 'Không Được Duyệt' ? (
+                                  <span className="bg-rose-600 text-white py-1 px-3 rounded-full text-xs">
+                                    Không được duyệt
+                                  </span>
+                                ) : null}
                               </td>
                               <td className="px-6 py-2">
                                 <span className="text-yellow-500 flex">
@@ -190,7 +230,12 @@ const NewsManager = () => {
                                     className="h-5 w-5 text-green-700 mx-2 cursor-pointer"
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
-                                    onClick={toggleForm}
+                                    onClick={() => {
+                                      console.log("Edit Clicked");
+                                      const postToEdit = detailuser.posts.find((p) => p.id === post.id);
+                                      setEditingPost(postToEdit);
+                                      toggleForm();
+                                    }}
                                   >
                                     <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                     <path
@@ -213,19 +258,30 @@ const NewsManager = () => {
                                   </svg>
                                 </span>
                               </td>
+                              
                             </tr>
-
+                            
                           ))}
+                          
                         </tbody>
+                        
                       </table>
                     ) : (
                       <p>Không có bài đăng </p>
                     )}
+                    
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div className="ml-auto">
+    <Pagination
+      postsPerPage={postsPerPage}
+      totalPosts={detailuser.posts.length}
+      paginate={paginate}
+    />
+  </div>
         </div>
       ) : (
         <p>Đang lấy thông tin đợi chút nha </p>
@@ -233,132 +289,108 @@ const NewsManager = () => {
       {showForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <div className="mx-auto w-full max-w-[850px] bg-white p-12 rounded-lg shadow-lg">
-            <form action="https://formbold.com/s/FORM_ID" method="POST">
+            <form action="https://formbold.com/s/FORM_ID" method="PUT">
               <div className="grid justify-items-end">
-                <button
-                  onClick={toggleForm}
-                  className=" top-4 left-4 text-[#6A64F1] rounded-full p-2  transition ease-in-out duration-200 focus:outline-none"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+
               </div>
-              <div className="-mx-3 flex flex-col">
-                <div className="w-full px-3 ">
-                  <div className="mb-5">
-                    <label className="mb-3 block text-base font-medium text-[#07074D]">
+              <div className="-mx-3 flex flex-rows">
+                <div className="w-full px-3 sm:w-1/2">
+                  <div className="">
+                    <label className=" block text-base font-medium text-[#07074D]">
                       Tiêu Đề
                     </label>
                     <input
                       type="text"
-                      id="fName"
-                      placeholder=""
+                      value={editingPost.title}
+                      onChange={(e) => setEditingPost({ ...editingPost, title: e.target.value })}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    />
+                  </div>
+                </div>
+                <div className="w-full px-3 sm:w-1/2">
+                  <div className="">
+                    <label className=" block text-base font-medium text-[#07074D] ">
+                      Diện Tích
+                    </label>
+                    <input
+                      type="text"
+                      value={editingPost.area}
+                      onChange={(e) => setEditingPost({ ...editingPost, area: e.target.value })}
                       className="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
                   </div>
                 </div>
-                <div className="w-full px-3 sm:w-1/2">
-                  <div className="mb-5">
-                    <label className="mb-3 block text-base font-medium text-[#07074D]">
-                      Giá
-                    </label>
-                    <input
-                      type="text"
-                      id="lName"
-                      placeholder=".......VND"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                </div>
               </div>
-              <div className="mb-5">
-                <label className="mb-3 block text-base font-medium text-[#07074D]">
-                  How many guest are you bringing?
+              <div className=" px-1">
+                <label className=" block text-base font-medium text-[#07074D]">
+                  Địa chỉ
                 </label>
                 <input
-                  type="number"
-                  name="guest"
-                  id="guest"
-                  placeholder="5"
-                  min="0"
+                  type="text"
+                  value={editingPost.address}
+                  onChange={(e) => setEditingPost({ ...editingPost, address: e.target.value })}
                   className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
+              <div className="px-1">
+  <label className="block text-base font-medium text-[#07074D]">
+    Mô Tả
+  </label>
+  <textarea
+    value={editingPost.description}
+    onChange={(e) => setEditingPost({ ...editingPost, description: e.target.value })}
+    className="w-full h-40 resize-none appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+  />
+</div>
 
-              <div className="-mx-3 flex flex-wrap">
-                <div className="w-full px-3 sm:w-1/2">
-                  <div className="mb-5">
-                    <label className="mb-3 block text-base font-medium text-[#07074D]">
-                      Date
-                    </label>
-                    <input
-                      type="date"
-                      name="date"
-                      id="date"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
+              <div className="-mx-3 flex flex-col mb-4">
+                <div className='flex flex-row'>
+                  <div className="w-full px-3 sm:w-1/2">
+                    <div className="">
+                      <label className=" block text-base font-medium text-[#07074D]">
+                        Giá
+                      </label>
+                      <input
+                        type="text"
+                        value={editingPost.price}
+                        onChange={(e) => setEditingPost({ ...editingPost, price: e.target.value })}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                      />
+                    </div>
+
                   </div>
+                  
                 </div>
-                <div className="w-full px-3 sm:w-1/2">
-                  <div className="mb-5">
-                    <label className="mb-3 block text-base font-medium text-[#07074D]">
-                      Time
+                {/* <div className='flex flex-row'>
+                  <div className='w-full px-3 sw:w-1/2'>
+                    <label className=" block text-base font-medium text-[#07074D]">
+                      Giới tính
                     </label>
-                    <input
-                      type="time"
-                      name="time"
-                      id="time"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
+                    <select
+                      value={editingUser.gender}
+                      onChange={(e) => setEditingUser({ ...editingUser, gender: e.target.value === 'true' })}
+                      className="w-max-[50px] rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    >
+                      <option value={true}>Nam</option>
+                      <option value={false}>Nữ</option>
+                    </select>
                   </div>
-                </div>
+
+
+                </div> */}
+
+
               </div>
-
-              <div className="mb-5">
-                <label className="mb-3 block text-base font-medium text-[#07074D]">
-                  Are you coming to the event?
-                </label>
-                <div className="flex items-center space-x-6">
-                  <div className="flex items-center">
-                    <input
-                      type="radio"
-                      name="radio1"
-                      id="radioButton1"
-                      className="h-5 w-5"
-                    />
-                    <label className="pl-3 text-base font-medium text-[#07074D]">
-                      Yes
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="radio"
-                      name="radio1"
-                      id="radioButton2"
-                      className="h-5 w-5"
-                    />
-                    <label className="pl-3 text-base font-medium text-[#07074D]">
-                      No
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <button className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
-                  Submit
+              <div className='flex gap-4'>
+                <button className="hover:shadow-form rounded-md bg-[#3eb15b] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                  // onClick={handleSave}
+                  >
+                  Lưu
+                </button>
+                <button className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                  onClick={toggleForm}
+                  >
+                  Cancel
                 </button>
               </div>
             </form>
@@ -367,6 +399,7 @@ const NewsManager = () => {
       )}
     </div>
   );
+
 };
 
 export default NewsManager;

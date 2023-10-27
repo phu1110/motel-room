@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { Slide } from 'react-slideshow-image';
 import { useParams } from 'react-router-dom';
-import anhtro from '../../assets/images/nhanobita.jpg'
-import nha from '../../assets/images/nha.jpg'
 import notfound from '../../assets/images/not_found.png'
 import icons from "../../ultils/icons";
 import '../../assets/css/slider.css'
@@ -12,7 +10,6 @@ import { image } from '../../api/URL';
 import moment from 'moment';
 const { BsChevronRight } = icons;
 const Productdetails = () => {
-  const images = [anhtro,nha,anhtro];
   const { id } = useParams();
   const [roomData, setRoomData] = useState([]);
   const [actualFile, setactualFile] = useState('');
@@ -39,13 +36,19 @@ const Productdetails = () => {
       <div className='w-1100 flex justify-between gap-2'>
       <div>
       <div className='left max-w-[700px] border border-black rounded-lg '>
-        <Slide >
-        {completePaths.map((completePath, index) => (
-    <div key={index} className="each-slide-effect">
-      <div style={{ 'backgroundImage': `url(${completePath})` }}></div>
+      <Slide>
+  {completePaths.length > 0 ? (
+    completePaths.map((completePath, index) => (
+      <div key={index} className="each-slide-effect">
+        <div style={{ 'backgroundImage': `url(${completePath})` }}></div>
+      </div>
+    ))
+  ) : (
+    <div className="each-slide-effect">
+      <div style={{ 'backgroundImage': `url(${notfound})` }}></div>
     </div>
-  ))}
-      </Slide>
+  )}
+</Slide>
           
           {roomData ? (
           <div className='ml-[15px]'>
@@ -124,7 +127,7 @@ const Productdetails = () => {
           </div>
         </div>
         <div className="border border-black rounded-lg ">
-          <TinMoi images={anhtro} title={'Nhà Của thằng này lạ quá ta'} price={'5 triệu'} date={'11/10/2003'}></TinMoi>
+          <TinMoi></TinMoi>
           
         </div>
             </div>

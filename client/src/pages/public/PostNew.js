@@ -7,6 +7,7 @@ const PostNew = () => {
     const Phone = "0797878315";
     const [Loading, setLoading] = useState(false);
     const [categorys, setCategorys] = useState([]);
+    const [selectedImages, setSelectedImages] = useState([]); 
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -41,78 +42,82 @@ const PostNew = () => {
     
 
     const handleCategoryChange = (selectedOptions) => {
-        // const selectedIds = selectedOptions.map((option) => option.value);
-        // setFormData({ ...formData, categoryIds: selectedIds });
         const updatedSelectedItems = selectedOptions.map(option => option.id);
         setSelectedItems(updatedSelectedItems);
       };
       
+      const handleRemoveImage = (indexToRemove) => {
+        const updatedFileUris = formData.fileUri.filter((uri, index) => index !== indexToRemove);
+        setFormData({ ...formData, fileUri: updatedFileUris });
+    };
+    
     const handleFileChange = (e) => {
         const files = e.target.files;
-        const fileUris = [];
-
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    
+        const selectedValidImages = [];
+    
         for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const fileUri = URL.createObjectURL(file);
-            fileUris.push(fileUri);
+          if (validImageTypes.includes(files[i].type)) {
+            selectedValidImages.push(files[i]);
+          }
         }
-
-        setFormData({ ...formData, fileUri: fileUris });
-    };
+    
+        setSelectedImages(selectedImages.concat(selectedValidImages));
+      };
+      const removeImage = (index) => {
+        const newSelectedImages = [...selectedImages];
+        newSelectedImages.splice(index, 1);
+        setSelectedImages(newSelectedImages);
+      };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-      
+        const selectedItemIds = Object.keys(selectedItems);
+        
         try {
-          const formDataObject = new FormData();
-      
-        //   // Append each key-value pair from formData to formDataObject
-        //   for (const key in formData) {
-        //     // Kiểm tra nếu key là 'categoryIds' và giá trị của formData[key] là một mảng
-        //     if (key === 'categoryIds' && Array.isArray(formData[key])) {
-        //       // formDataObject sẽ xử lý mảng 'categoryIds' một cách đúng đắn
-        //       formDataObject.append(key, formData[key]);
-        //     } else {
-        //       // Ngược lại, thêm giá trị bình thường vào formDataObject
-        //       formDataObject.append(key, formData[key]);
-        //     }
-        //   }
-        formDataObject.append('title', formData.title);
-        formDataObject.append('address', formData.address);
-        formDataObject.append('description', formData.description);
-        formDataObject.append('area', formData.area);
-        formDataObject.append('price', formData.price);
-        formDataObject.append('userId', localStorage.getItem("userid"));
-        formDataObject.append('status', 'Đang Chờ Duyệt');
-        //formDataObject.append('categoryids', 1);
-        formDataObject.append('isHire', false);
-        selectedItems.forEach((itemId) => {
-            formDataObject.append('categoryids', itemId);
-        });
-        console.log("FormData:", formData);
-      
-          const config = {
-            headers: {
-              'Content-Type': 'multipart/form-data', // Set the content type to multipart/form-data
-              'accept': '*',
-            },
-          };
-          const response = await axios.post(
-            'https://localhost:7139/api/Post/add-post',
-            formDataObject, config
-          );
-      
-          if (response.status === 200) {
-            toast.success('Đăng tin thành công!');
-            // Perform additional actions after successfully adding a post.
-          }
+            const formDataObject = new FormData();
+            formDataObject.append('title', formData.title);
+            formDataObject.append('address', formData.address);
+            formDataObject.append('description', formData.description);
+            formDataObject.append('area', formData.area);
+            formDataObject.append('price', formData.price);
+            formDataObject.append('userId', localStorage.getItem("userid"));
+            formDataObject.append('status', 'Đang Chờ Duyệt');
+            formDataObject.append('isHire', false);
+            for (let i = 0; i < selectedImages.length; i++) {
+                formDataObject.append('FileUri', selectedImages[i]);
+            }
+            selectedItems.forEach((itemId) => {
+                formDataObject.append('categoryids', itemId);
+              
+            });
+            
+    
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'accept': '*',
+                },
+            };
+            const response = await axios.post(
+                'https://localhost:7139/api/Post/add-post',
+                formDataObject, config
+            );
+            console.log(response.data)
+            if (response.status === 200) {
+                toast.success('Đăng tin thành công!');
+                // Perform additional actions after successfully adding a post.
+            }
         } catch (error) {
-          console.error("Error sending data:", error);
-          toast.error("Đã có lỗi xảy ra khi thêm tin đăng.");
+            console.error("Error sending data:", error);
+            toast.error("Đã có lỗi xảy ra khi thêm tin đăng.");
         }
-      
+    
         setLoading(false);
-      };
+    };
+    
       
     
 
@@ -249,24 +254,24 @@ const PostNew = () => {
 
                             </div>
                             <div className="ml-[50px] mb-4">
-                                <label htmlFor="image" className="block font-medium text-gray-700">
-                                    Hình ảnh:
-                                </label>
-                                <input
-                                    type="file"
-                                    id="image"
-                                    className="w-full mt-1"
-                                    onChange={handleFileChange}
-                                    multiple // Cho phép chọn nhiều ảnh
-                                />
-                            </div>
+                                    <label htmlFor="image" className="block font-medium text-gray-700">Hình ảnh:</label>
+                                    <input
+                                        type="file"
+                                        id="image"
+                                        name="image"
+                                        className="w-full mt-1"
+                                        multiple
+                                        accept="image/jpeg,image/png,image/jpg"
+                                        onChange={handleFileChange}
+                                    />{selectedImages.map((file, index) => (
+                                        <div key={index}>
+                                          <p>{file.name}</p>
+                                          <button onClick={() => removeImage(index)}>Remove</button>
+                                        </div>
+                                      ))}
+                                </div>
+   
 
-                            {/* Hiển thị danh sách các ảnh đã chọn */}
-                            <div className="flex flex-row max-w-[65px]">
-                                {formData.fileUri.map((uri, index) => (
-                                    <img key={index} src={uri} alt={`Image ${index}`}/>
-                                ))}
-                            </div>
                             <button
     type="submit"
     className="ml-[50px]  bg-sky-500 text-white py-2 px-4 w-[100px] rounded-md hover:bg-sky-600"

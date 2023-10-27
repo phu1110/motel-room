@@ -28,8 +28,11 @@ const Login = () => {
           const role = response.data.roleId;
           const avatar = response.data.avatar;
           const userphone = response.data.phone;
+          const useraddress = response.data.address;
+          const usergender = response.data.gender;
+          const birthday  = response.data.birthday;
           // const path = localStorage.setItem('path', window.location.pathname);
-          loginContext(token,userid,firstname,lastname,role,avatar,userphone)
+          loginContext(token,userid,firstname,lastname,role,avatar,userphone,useraddress,usergender,birthday)
             toast.success('Đăng nhập thành công', {
               position: 'top-right',
               autoClose: 2000, // Đóng thông báo sau 3 giây
