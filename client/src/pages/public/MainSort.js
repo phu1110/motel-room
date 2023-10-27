@@ -1,14 +1,19 @@
-import React,{useCallback} from "react";
+import React,{useCallback, useState, useEffect} from "react";
 import anhtro from "../../assets/images/nhanobita.jpg";
 import icons from "../../ultils/icons";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import {path} from '../../ultils/constants';
 import { TiemKiemGia, SanPham,TinMoi,SanPham1,Button} from "../../components";
+import Pagination from '../../components/Pagination';
+import { getPost } from "../../api/api";
 const { BsChevronRight } = icons;
 
 const MainSort = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [pagesize, setPageSize] = useState(10);
+  const [totalPage, setTotalPage] = useState(null);
   const searchParams = new URLSearchParams(location.search);
   const minPrice = searchParams.get("minPrice") ?? null;
   const maxPrice = searchParams.get("maxPrice") ?? null;
@@ -31,11 +36,26 @@ const MainSort = () => {
     if (minArea) queryParams.minArea = minArea;
     if (maxArea) queryParams.maxArea = maxArea;
     if (category) queryParams.category = category;
+    setPage(1);
     const queryString = Object.keys(queryParams)
       .map((key) => `${key}=${queryParams[key]}`)
       .join("&");
     navigate(`${location.pathname}?${queryString}`);
   }, [navigate]);
+  const hireState = 'Chưa Được Thuê';
+  const statusState = 'Đã Duyệt';
+  const loadPost = async (hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize) => {
+    await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize)
+    .then(apiData => {
+        setTotalPage(apiData.data.totalPages);
+    })
+  }
+  const handlePageClick = (event) => {
+    setPage(event.selected + 1);
+  }
+  useEffect(() => {
+    loadPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, null, null, true, 1, pagesize);
+  }, [minPrice, maxPrice, minArea, maxArea, category])
   return (
     <div className="flex justify-between  w-1100 ">
       <div className="left w-[740px]  mx-auto lg:mx-0">
@@ -66,14 +86,15 @@ const MainSort = () => {
         </div>
         <div style={{ width: '94%', height: '1px', backgroundColor: 'black' }} className="mb-2 mx-auto"></div>
         <div className="m-4">
-          <SanPham link={goProduct} miPrice={minPrice} maPrice={maxPrice} miArea={minArea} maArea={maxArea} cate={category}/>
+          <SanPham link={goProduct} miPrice={minPrice} maPrice={maxPrice} miArea={minArea} maArea={maxArea} cate={category} pageN={page}/>
           {/* <SanPham link={goProduct}/> */}
         </div>
         </div>
         <div className="border border-black rounded-lg ">
           {/* <SanPham1 miPrice={minPrice} maPrice={maxPrice} miArea={minArea} maArea={maxArea} cate={category}/> */}
-          <SanPham1 link={goProduct} miPrice={minPrice ?? null} maPrice={maxPrice?? null} miArea={minArea?? null} maArea={maxArea?? null} cate={category}/>
+          <SanPham1 link={goProduct} miPrice={minPrice ?? null} maPrice={maxPrice?? null} miArea={minArea?? null} maArea={maxArea?? null} cate={category} pageN={page}/>
         </div>
+        <Pagination totalPages={totalPage} handlePageClick={handlePageClick} />
       </div>
       <div className="right flex flex-col gap-4 lg:block hidden ">
         <div className="w-[340px] border border-black h-[380px] rounded-lg">
