@@ -5,11 +5,7 @@ import notfound from '../assets/images/not_found.png'
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-const List = ({miPrice, maPrice, miArea, maArea, cate, pageN }) => {
-  const [page, setPage] = useState(pageN);
-  const [roomList, setRoomList] = useState([]);
-
-const List = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
+const List = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
   const [page, setPage] = useState(1);
   const [pagesize, setPageSize] = useState(7);
   const [roomList, setRoomList] = useState([]); 

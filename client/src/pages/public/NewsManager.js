@@ -3,6 +3,8 @@ import { getUserData } from '../../api/api.js';
 import moment from 'moment';
 import Pagination from "./Pagination.js";
 import notfound from '../../assets/images/not_found.png'
+import Select from "react-select";
+import EditPost from "./EditPost.js";
 function TruncatedText({ text, maxLength }) {
   if (text.length <= maxLength) {
     return (
@@ -24,7 +26,7 @@ const NewsManager = () => {
   const [showForm, setShowForm] = useState(false);
   const [detailuser, setDetailUser] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedImages, setSelectedImages] = useState([]); 
+  const [selectedImages, setSelectedImages] = useState([]);
   const postsPerPage = 5;
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -52,8 +54,8 @@ const NewsManager = () => {
 
   const paginate = pageNumber => setCurrentPage(pageNumber);
   const calculateElapsedTime = (post) => {
-    if (post && post.datecreatedroom) {
-      const postDate = moment(post.datecreatedroom);
+    if (post && post.dateCreated) {
+      const postDate = moment(post.dateCreated);
       const currentDate = moment();
 
       const hoursDiff = currentDate.diff(postDate, 'hours');
@@ -87,7 +89,7 @@ const NewsManager = () => {
     }
   };
 
-  
+
 
 
   const [editingPost, setEditingPost] = useState(null);
@@ -258,144 +260,36 @@ const NewsManager = () => {
                                   </svg>
                                 </span>
                               </td>
-                              
+
                             </tr>
-                            
+
                           ))}
-                          
+
                         </tbody>
-                        
+
                       </table>
                     ) : (
                       <p>Không có bài đăng </p>
                     )}
-                    
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="ml-auto">
-    <Pagination
-      postsPerPage={postsPerPage}
-      totalPosts={detailuser.posts.length}
-      paginate={paginate}
-    />
-  </div>
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={detailuser.posts.length}
+              paginate={paginate}
+            />
+          </div>
         </div>
       ) : (
         <p>Đang lấy thông tin đợi chút nha </p>
       )}
       {showForm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-          <div className="mx-auto w-full max-w-[850px] bg-white p-12 rounded-lg shadow-lg">
-            <form action="https://formbold.com/s/FORM_ID" method="PUT">
-              <div className="grid justify-items-end">
-
-              </div>
-              <div className="-mx-3 flex flex-rows">
-                <div className="w-full px-3 sm:w-1/2">
-                  <div className="">
-                    <label className=" block text-base font-medium text-[#07074D]">
-                      Tiêu Đề
-                    </label>
-                    <input
-                      type="text"
-                      value={editingPost.title}
-                      onChange={(e) => setEditingPost({ ...editingPost, title: e.target.value })}
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                </div>
-                <div className="w-full px-3 sm:w-1/2">
-                  <div className="">
-                    <label className=" block text-base font-medium text-[#07074D] ">
-                      Diện Tích
-                    </label>
-                    <input
-                      type="text"
-                      value={editingPost.area}
-                      onChange={(e) => setEditingPost({ ...editingPost, area: e.target.value })}
-                      className="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className=" px-1">
-                <label className=" block text-base font-medium text-[#07074D]">
-                  Địa chỉ
-                </label>
-                <input
-                  type="text"
-                  value={editingPost.address}
-                  onChange={(e) => setEditingPost({ ...editingPost, address: e.target.value })}
-                  className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-              </div>
-              <div className="px-1">
-  <label className="block text-base font-medium text-[#07074D]">
-    Mô Tả
-  </label>
-  <textarea
-    value={editingPost.description}
-    onChange={(e) => setEditingPost({ ...editingPost, description: e.target.value })}
-    className="w-full h-40 resize-none appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-  />
-</div>
-
-              <div className="-mx-3 flex flex-col mb-4">
-                <div className='flex flex-row'>
-                  <div className="w-full px-3 sm:w-1/2">
-                    <div className="">
-                      <label className=" block text-base font-medium text-[#07074D]">
-                        Giá
-                      </label>
-                      <input
-                        type="text"
-                        value={editingPost.price}
-                        onChange={(e) => setEditingPost({ ...editingPost, price: e.target.value })}
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                      />
-                    </div>
-
-                  </div>
-                  
-                </div>
-                {/* <div className='flex flex-row'>
-                  <div className='w-full px-3 sw:w-1/2'>
-                    <label className=" block text-base font-medium text-[#07074D]">
-                      Giới tính
-                    </label>
-                    <select
-                      value={editingUser.gender}
-                      onChange={(e) => setEditingUser({ ...editingUser, gender: e.target.value === 'true' })}
-                      className="w-max-[50px] rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    >
-                      <option value={true}>Nam</option>
-                      <option value={false}>Nữ</option>
-                    </select>
-                  </div>
-
-
-                </div> */}
-
-
-              </div>
-              <div className='flex gap-4'>
-                <button className="hover:shadow-form rounded-md bg-[#3eb15b] py-3 px-8 text-center text-base font-semibold text-white outline-none"
-                  // onClick={handleSave}
-                  >
-                  Lưu
-                </button>
-                <button className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
-                  onClick={toggleForm}
-                  >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+        <EditPost data={editingPost} toggleForm={toggleForm}/>
       )}
     </div>
   );

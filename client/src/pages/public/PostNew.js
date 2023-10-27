@@ -74,8 +74,6 @@ const PostNew = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const selectedItemIds = Object.keys(selectedItems);
-        
         try {
             const formDataObject = new FormData();
             formDataObject.append('title', formData.title);
@@ -114,7 +112,6 @@ const PostNew = () => {
             console.error("Error sending data:", error);
             toast.error("Đã có lỗi xảy ra khi thêm tin đăng.");
         }
-    
         setLoading(false);
     };
     
