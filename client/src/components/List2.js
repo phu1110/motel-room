@@ -2,11 +2,8 @@ import React, { memo, useEffect, useState } from 'react';
 import { getPost } from '../api/api';
 import { image } from '../api/URL';
 import moment from 'moment';
-const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
-  const [page, setPage] = useState(1);
-  const [pagesize, setPageSize] = useState(6);
+const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
   const [roomList, setRoomList] = useState([]);
-  const [totalCount, setTotalCount] = useState(0);
   const [minPrice, setminPrice] = useState(miPrice);
   const [maxPrice, setmaxPrice] = useState(maPrice);
   const [minArea, setminArea] = useState(miArea);
@@ -37,7 +34,7 @@ const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
     await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize)
     .then(apiData => {
         setRoomList(apiData.data.post);
-        setTotalCount(apiData.data.total);
+        console.log(apiData)
     })
   }
   useEffect(() => {
@@ -45,11 +42,10 @@ const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
     const statusState = 'Đã Duyệt';
     const isVip = 'Hạng Thường';
     const sortBy = 'dateCreated';
-    const isAscending = true;
-    const pageNumber = page;
-    const pageSize = pagesize;
-    loadPostNormal(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize);
-  }, []);
+    const isAscending = false;
+    const pagesize = 6;
+    loadPostNormal(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageN, pagesize);
+  }, [pageN]);
   const calculateElapsedTime = (room) => {
     if (room && room.dateApproved) {
       const roomDate = moment(room.dateApproved);

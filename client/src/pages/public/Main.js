@@ -1,13 +1,34 @@
-import React,{useCallback, useState} from "react";
+import React,{useCallback, useState, useEffect} from "react";
+import { getPost } from "../../api/api";
 import anhtro from "../../assets/images/nhanobita.jpg";
 import icons from "../../ultils/icons";
 import { useNavigate } from "react-router-dom";
 import {path} from '../../ultils/constants';
 import { TiemKiemGia, SanPham,TinMoi,SanPham1,Button} from "../../components";
+import Pagination from '../../components/Pagination'
 
 const { BsChevronRight } = icons;
 const Main = () => {
+  const [page, setPage] = useState(1);
+  const [pagesize, setPageSize] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
+  const [totalPage, setTotalPage] = useState(null);
+  const hireState = 'Chưa Được Thuê';
+  const statusState = 'Đã Duyệt';
   const navigate = useNavigate();
+  const handlePageClick = (event) => {
+    setPage(event.selected + 1);
+  }
+  const loadPost = async (hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize) => {
+    await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize)
+    .then(apiData => {
+        setTotalCount(apiData.data.total);
+        setTotalPage(apiData.data.totalPages);
+    })
+  }
+  useEffect(() => {
+    loadPost(hireState, statusState, null, null, null, null, null, null, null, true, 1, pagesize);
+  }, [])
   const goMainSort = useCallback((minPrice, maxPrice, minArea, maxArea, category) => {
     const queryParams = {};
     if (minPrice) queryParams.minPrice = minPrice;
@@ -50,12 +71,13 @@ const Main = () => {
         </div> */}
         <div style={{ width: '94%', height: '1px', backgroundColor: 'black' }} className="mb-2 mx-auto"></div>
         <div className="m-4">
-          <SanPham />
+        <SanPham pageN={page} />
         </div>
         </div>
         <div className="border border-black rounded-lg mb-6 ">
-          <SanPham1/>
+        <SanPham1 pageN={page} />
         </div>
+        <Pagination totalPages={totalPage} handlePageClick={handlePageClick} />
       </div>
       <div className="right flex flex-col gap-4  ">
         <div className="w-[340px] border border-black h-[380px] rounded-lg">

@@ -4,11 +4,17 @@ import { image } from '../api/URL';
 import notfound from '../assets/images/not_found.png'
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+
+const List = ({miPrice, maPrice, miArea, maArea, cate, pageN }) => {
+  const [page, setPage] = useState(pageN);
+  const [roomList, setRoomList] = useState([]);
+
 const List = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
   const [page, setPage] = useState(1);
   const [pagesize, setPageSize] = useState(7);
   const [roomList, setRoomList] = useState([]); 
   const [totalCount, setTotalCount] = useState(0);
+
   const [minPrice, setminPrice] = useState(miPrice);
   const [maxPrice, setmaxPrice] = useState(maPrice);
   const [minArea, setminArea] = useState(miArea);
@@ -38,19 +44,20 @@ const List = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
     await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize)
     .then(apiData => {
         setRoomList(apiData.data.post);
-        setTotalCount(apiData.data.total);
+        console.log(apiData)
+    }).catch(api =>{
+      console.error(api)
     })
   }
-useEffect(() => {
+  useEffect(() => {
   const hireState = 'Chưa Được Thuê';
   const statusState = 'Đã Duyệt';
   const isVip = 'Hạng Vip';
   const sortBy = 'dateCreated';
-  const isAscending = true;
-  const pageNumber = page;
-  const pageSize = pagesize;
-  loadPostVip(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize);
-}, []);
+  const isAscending = false;
+  const pagesize = 4;
+  loadPostVip(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageN, pagesize);
+}, [pageN]);
 const calculateElapsedTime = (room) => {
   if (room && room.dateApproved) {
     const roomDate = moment(room.dateApproved);
