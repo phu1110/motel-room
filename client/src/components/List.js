@@ -6,8 +6,8 @@ import phone from '../assets/images/phone.png'
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-const List = ({miPrice, maPrice, miArea, maArea, cate, pageN }) => {
-  const [page, setPage] = useState(pageN);
+const List = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
+  const [page, setPage] = useState(1);
   const [roomList, setRoomList] = useState([]);
   const [pagesize, setPageSize] = useState(7);
   const [totalCount, setTotalCount] = useState(0);
