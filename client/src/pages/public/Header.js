@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <div className='w-full'>
       <div className="header ">
-      <div className='w-full flex items-center justify-between bg-primary'>
+      <div className='w-full flex items-center justify-between '>
       <p
       className="w-[240px] h-[70px] flex items-center text-3xl  justify-center cursor-pointer "
       onClick={goHome}>

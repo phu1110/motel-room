@@ -3,6 +3,7 @@ import { getPost } from '../api/api';
 import { image } from '../api/URL';
 import notfound from '../assets/images/not_found.png';
 import '../assets/css/style.css'
+import { Link } from 'react-router-dom';
 function TruncatedText({ text, maxLength }) {
   if (text.length <= maxLength) {
     return (
@@ -63,9 +64,11 @@ export const NewList = ({images,title,price,date}) => {
     </div>
                 </div>)}
               <div className="Content p-2">
-                <a href="/Product" className=" text-blue-400 hover:text-pink-500">
+              <Link to={`/Product/${room.id}`}>
+                <p   className=" text-blue-400 hover:text-pink-500">
                 <TruncatedText text={room.description} maxLength={50} />
-                </a>
+                </p>
+                </Link>
                 <div className="flex grid grid-cols items-center">
                   <p className="text-black-500 text-sm">Giá: {room.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
                   <p className="text-black-500 text-sm">Ngày đăng: {room.formattedDatecreated}</p>

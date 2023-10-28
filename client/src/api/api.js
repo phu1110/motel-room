@@ -114,3 +114,6 @@ export const getCategoryData = () => {
 export const detailUser = (userId) => {
   return axios.get(`${API_BASE_URL}/User/get-user-with-id?id=${userId}`)
 } 
+export const deletePost = (id) => {
+  return axios.delete(`${API_BASE_URL}/Post/delete-post-with-id/?id=${id}`);
+};

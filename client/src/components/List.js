@@ -8,11 +8,7 @@ import { Link } from 'react-router-dom';
 const List = ({miPrice, maPrice, miArea, maArea, cate, pageN }) => {
   const [page, setPage] = useState(pageN);
   const [roomList, setRoomList] = useState([]);
-
-const List = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
-  const [page, setPage] = useState(1);
   const [pagesize, setPageSize] = useState(7);
-  const [roomList, setRoomList] = useState([]); 
   const [totalCount, setTotalCount] = useState(0);
 
   const [minPrice, setminPrice] = useState(miPrice);
@@ -44,7 +40,6 @@ const List = ({ link, miPrice, maPrice, miArea, maArea, cate }) => {
     await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize)
     .then(apiData => {
         setRoomList(apiData.data.post);
-        console.log(apiData)
     }).catch(api =>{
       console.error(api)
     })
@@ -157,6 +152,5 @@ const calculateElapsedTime = (room) => {
       ))) : (null)}
   </div>
   );
-};
-
-export default memo(List);
+}
+export default memo(List)

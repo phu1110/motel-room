@@ -2,6 +2,8 @@ import React, { memo, useEffect, useState } from 'react';
 import { getPost } from '../api/api';
 import { image } from '../api/URL';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+import notfound from '../assets/images/not_found.png';
 const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
   const [roomList, setRoomList] = useState([]);
   const [minPrice, setminPrice] = useState(miPrice);
@@ -34,7 +36,6 @@ const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
     await getPost(hireState, statusState, minPrice, maxPrice, minArea, maxArea, category, isVip, sortBy, isAscending, pageNumber, pageSize)
     .then(apiData => {
         setRoomList(apiData.data.post);
-        console.log(apiData)
     })
   }
   useEffect(() => {
@@ -75,13 +76,15 @@ const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
       (roomList.map((room) => (
         <div key={room.id}>
           <div className="Product static flex gap-4 my-4">
-            <div className="images w-[200px] pl-[5px] relative">
+            <div className="images w-[200px]  relative">
               <a href={link}> {/* Sử dụng thẻ <a> để tạo liên kết */}
               {room.actualFile ? (<img
                   src={`${image}/${room.actualFile}`}
-                  className="border border-black object-cover rounded-lg h-[200px] "
+                  className="border border-black object-cover rounded-lg h-[150px] "
                   alt="Biểu trưng ABC Corp"
-                />):(<div className="w-full h-full bg-gray-300"></div>)}
+                />):(<div className="w-full h-full bg-gray-300">
+                  <img src={notfound}></img>
+                </div>)}
                 
               </a>
               <span className="group absolute bottom-0 right-0 p-2 transition-colors duration-300"></span>
@@ -89,26 +92,21 @@ const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
             <div className="w-[550px] ">
               <div className="w-full pr-[15px]">
                 <div className="flex items-center justify-center h-full">
-                  <a
-                    href={link}
-                    className="text-red-700 decoration-black-600 hover:decoration-blue-400  "
-                  >
-                    {room.title}
-                  </a>
+                <Link to={`/Product/${room.id}`}>
+            <p 
+              
+              className="text-red-700 decoration-black-600 hover:decoration-blue-400  "
+            >
+              {room.title}
+            </p>
+            </Link>
+                  
                 </div>
-                <div className="flex items-center justify-between gap-2 pl-[2px]">
-                  <p className="price text-sky-400 "> {room.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
-                  <p className="acreage"> {room.area}m² </p>
-                  <p className="address  decoration-black-600 hover:decoration-blue-400 cursor-ponter">
-                  {getAddressBeforeComma(room.address)}
-                  </p>
-                </div>
+                
                 <div className="flex">
                   <p className="Time ml-auto">{calculateElapsedTime(room)}</p>
                 </div>
-                <p className="text-gray-400">
-                <TruncatedText text={room.description} maxLength={100} />
-                </p>
+               
                 <div className="flex">
                   <a className="mr-auto text-blue-400" href="/Login">{room.authorname}</a>
                   <div className="text-right flex gap-2">

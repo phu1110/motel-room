@@ -62,27 +62,6 @@ const MainSort = () => {
         <div className="border border-black rounded-lg ">
         <h2 className="font-bold ml-[5px]">Danh Sách Đăng Tin</h2>
         <div className="arrange flex justify-betwen items-center ml-[15px]">
-          <small> Sắp Xếp : </small>
-          <div className="flex justify-between">
-            <Button
-              text={"Mặc Định"}
-              hover={" hover:bg-gray-200 hover:text-black-500"}
-              bgColor={"bg-primary"}
-              textColor={"text-black"}
-            />
-            <Button
-              text={"Mặc Định"}
-              hover={" hover:bg-gray-200 hover:text-black-500"}
-              bgColor={"bg-primary"}
-              textColor={"text-black"}
-            />
-            <Button
-              text={"Mặc Định"}
-              hover={" hover:bg-gray-200 hover:text-black-500"}
-              bgColor={"bg-primary"}
-              textColor={"text-black"}
-            />
-          </div>
         </div>
         <div style={{ width: '94%', height: '1px', backgroundColor: 'black' }} className="mb-2 mx-auto"></div>
         <div className="m-4">
@@ -96,8 +75,8 @@ const MainSort = () => {
         </div>
         <Pagination totalPages={totalPage} handlePageClick={handlePageClick} />
       </div>
-      <div className="right flex flex-col gap-4 lg:block hidden ">
-        <div className="w-[340px] border border-black h-[380px] rounded-lg">
+      <div className="right flex flex-col gap-4 ">
+        <div className="w-[340px] border border-black  rounded-lg">
           <h2 className="text-center text-xl font-bold my-4">Tìm theo giá</h2>
           <div className="grid grid-cols-2 gap-4">
             <TiemKiemGia link={() => goMainSort(1,1000000,null,null, null)} Icons={BsChevronRight} text={'Dưới 1 Triệu'}></TiemKiemGia>
@@ -110,7 +89,7 @@ const MainSort = () => {
             <TiemKiemGia link={() => goMainSort(15000000,150000000,null,null, null)} Icons={BsChevronRight} text={'Trên 15 triệu'}></TiemKiemGia>
           </div>
         </div>
-        <div className="w-[340px] border border-black h-[220px] rounded-lg ">
+        <div className="w-[340px] border border-black  rounded-lg ">
           <h2 className="text-center text-xl font-bold my-4">Tìm Theo Diện Tích</h2>
           <div className="grid grid-cols-2 gap-2">
             <TiemKiemGia link={() => goMainSort(null,null,1,20, null)} Icons={BsChevronRight} text={'Dưới 20m'}></TiemKiemGia>

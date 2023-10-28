@@ -43,7 +43,7 @@ const Main = () => {
   }, [navigate]);
   return (
     <div className="flex justify-between  w-1100 ">
-      <div className="left w-[740px]  lg:mx-0 flex flex-col gap-6 border border-black p-4 rounded-lg h-full min-h-[1px]">
+      <div className="left w-[740px]  lg:mx-0 flex flex-col gap-2 border border-black p-4 rounded-lg h-full min-h-[1px]">
         <div className="border border-black rounded-lg ">
         <h2 className="font-bold ml-[5px]">Danh Sách Đăng Tin</h2>
         {/* <div className="arrange flex justify-betwen items-center ml-[15px]">
@@ -93,9 +93,9 @@ const Main = () => {
             <TiemKiemGia link={() => goMainSort(15000000,150000000,null,null, null)} Icons={BsChevronRight} text={'Trên 15 triệu'}></TiemKiemGia>
           </div>
         </div>
-        <div className="w-[340px] border border-black h-[220px] rounded-lg ">
+        <div className="w-full min-w-[1px] border border-black  rounded-lg ">
           <h2 className="text-center text-xl font-bold my-4">Tìm Theo Diện Tích</h2>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2 ">
             <TiemKiemGia link={() => goMainSort(null,null,1,20, null)} Icons={BsChevronRight} text={'Dưới 20m'}></TiemKiemGia>
             <TiemKiemGia link={() => goMainSort(null,null,20,30, null)} Icons={BsChevronRight} text={'Từ 20 - 30m'}></TiemKiemGia>
             <TiemKiemGia link={() => goMainSort(null,null,30,50, null)} Icons={BsChevronRight} text={'Từ 30 - 50m'}></TiemKiemGia>
@@ -104,7 +104,7 @@ const Main = () => {
             <TiemKiemGia link={() => goMainSort(null,null,90,99999, null)} Icons={BsChevronRight} text={'Trên 90m'}></TiemKiemGia>
           </div>
         </div>
-        <div className="w-[340px]  border border-black rounded-lg ">
+        <div className="  border border-black rounded-lg ">
         <TinMoi images={anhtro}/>
         </div>
       </div>

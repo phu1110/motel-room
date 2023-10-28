@@ -105,7 +105,6 @@ const PostNew = () => {
                 'https://localhost:7139/api/Post/add-post',
                 formDataObject, config
             );
-            console.log(response.data)
             if (response.status === 200) {
                 toast.success('Đăng tin thành công!');
                 // Perform additional actions after successfully adding a post.
@@ -263,15 +262,27 @@ const PostNew = () => {
                                         multiple
                                         accept="image/jpeg,image/png,image/jpg"
                                         onChange={handleFileChange}
-                                    />{selectedImages.map((file, index) => (
-                                        <div key={index}>
-                                          <p>{file.name}</p>
-                                          <button onClick={() => removeImage(index)}>Remove</button>
-                                        </div>
-                                      ))}
+                                    />
                                 </div>
-   
+                                <div className="mt-2 space-y-2">
+                                    <div className="flex flex-row">
+            {selectedImages.map((file, index) => { // Log the selected image object
+              return (
+                <div key={index} className="flex ">
+  <div className="flex flex-col items-center">
+    <img
+      src={URL.createObjectURL(file)}
+      alt={`Selected Image ${index + 1}`}
+      className="w-16 h-16 object-cover rounded-md mr-2"
+    />
+    <button onClick={() => removeImage(index)}>Remove</button>
+  </div>
+</div>
 
+              );
+            })}
+          </div>
+          </div>
                             <button
     type="submit"
     className="ml-[50px]  bg-sky-500 text-white py-2 px-4 w-[100px] rounded-md hover:bg-sky-600"
