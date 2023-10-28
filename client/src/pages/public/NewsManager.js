@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { getUserData } from '../../api/api.js';
+import { getUserData,deletePost } from '../../api/api.js';
 import moment from 'moment';
 import Pagination from "./Pagination.js";
 import notfound from '../../assets/images/not_found.png'
-import Select from "react-select";
 import EditPost from "./EditPost.js";
 function TruncatedText({ text, maxLength }) {
   if (text.length <= maxLength) {
@@ -43,10 +42,13 @@ const NewsManager = () => {
     };
 
     fetchData();
-  }, []);
+  }, [showForm,detailuser]);
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const handleDelete = async (id) => {
+      await deletePost(id);
+  }
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -93,20 +95,6 @@ const NewsManager = () => {
 
 
   const [editingPost, setEditingPost] = useState(null);
-  const handleFileChange = (e) => {
-    const files = e.target.files;
-    const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-
-    const selectedValidImages = [];
-
-    for (let i = 0; i < files.length; i++) {
-      if (validImageTypes.includes(files[i].type)) {
-        selectedValidImages.push(files[i]);
-      }
-    }
-
-    setSelectedImages(selectedImages.concat(selectedValidImages));
-  };
   return (
     <div className="">
       {detailuser ? (
@@ -208,7 +196,7 @@ const NewsManager = () => {
                                 {calculateElapsedTime(post)}
                               </td>
                               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                19/09/2023
+                                {post.expireDate}
                               </td>
                               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                 {post.status === 'Đang Chờ Duyệt' ? (
@@ -219,9 +207,13 @@ const NewsManager = () => {
                                   <span className="bg-green-600 text-white py-1 px-3 rounded-full text-xs">
                                     Đã duyệt
                                   </span>
-                                ) : post.status === 'Không Được Duyệt' ? (
+                                ) : post.status === 'Không Chấp Nhận Duyệt' ? (
                                   <span className="bg-rose-600 text-white py-1 px-3 rounded-full text-xs">
                                     Không được duyệt
+                                  </span>
+                                ) : post.status === 'Đã Ẩn' ? (
+                                  <span className="bg-rose-600 text-white py-1 px-3 rounded-full text-xs">
+                                    Đã Ẩn
                                   </span>
                                 ) : null}
                               </td>
@@ -233,7 +225,6 @@ const NewsManager = () => {
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
                                     onClick={() => {
-                                      console.log("Edit Clicked");
                                       const postToEdit = detailuser.posts.find((p) => p.id === post.id);
                                       setEditingPost(postToEdit);
                                       toggleForm();
@@ -251,6 +242,10 @@ const NewsManager = () => {
                                     className="h-5 w-5 text-red-700 cursor-pointer"
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
+                                    onClick={() => {
+                                      const postIdToEdit = detailuser.posts.find((p) => p.id === post.id)?.id;
+                                      handleDelete(postIdToEdit);
+                                    }}
                                   >
                                     <path
                                       fillRule="evenodd"

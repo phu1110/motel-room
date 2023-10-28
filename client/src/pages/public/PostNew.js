@@ -132,8 +132,7 @@ const PostNew = () => {
                     ></div>
                     <div className="bg-red-200 p-4 rounded-lg mx-[5px]">
                         <p className="text-base">
-                            Nếu bạn đã từng đăng tin, hãy sử dụng chức năng ĐẨY TIN / GIA HẠN
-                            / NÂNG CẤP VIP trong mục QUẢN LÝ TIN ĐĂNG để làm mới, đẩy tin lên
+                            Nếu bạn đã từng đăng tin, hãy sử dụng chức năng sỬA TIN trong mục QUẢN LÝ TIN ĐĂNG để làm mới, đẩy tin lên
                             cao thay vì đăng tin mới. Tin đăng trùng nhau sẽ không được duyệt.
                         </p>
                     </div>
