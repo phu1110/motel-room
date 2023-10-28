@@ -2,7 +2,6 @@ import React, { memo,useEffect, useState } from 'react';
 import { getPost } from '../api/api';
 import { image } from '../api/URL';
 import notfound from '../assets/images/not_found.png'
-import phone from '../assets/images/phone.png'
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
