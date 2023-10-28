@@ -12,21 +12,21 @@ const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
   const [maxArea, setmaxArea] = useState(maArea);
   const [category, setcategory] = useState(cate);
   function getAddressBeforeComma(address) {
-    const commaIndex = address.indexOf(','|| '/');
+    const commaIndex = address.indexOf(',');
     return commaIndex !== -1 ? address.slice(0, commaIndex).trim() : address;
   }
   
   function TruncatedText({ text, maxLength }) {
     if (text.length <= maxLength) {
       return (
-        <td className="text-sm font-semibold text-cyan-900 text-justify ">
+        <td className="text-basic text-black font-bold px-6 py-4  ">
           {text}
         </td>
       );
     } else {
       const truncatedText = text.slice(0, maxLength) + "...";
       return (
-        <td className="text-sm font-semibold text-cyan-900 text-justify">
+        <td className="text-basic text-black font-bold px-6 py-4  ">
           {truncatedText}
         </td>
       );
@@ -75,54 +75,48 @@ const List2 = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
       {Array.isArray(roomList) && roomList.length > 0 ? 
       (roomList.map((room) => (
         <div key={room.id}>
-          <div class='flex items-center '>
-	<div class="p-4 items-center mb-2 justify-center w-[680px] rounded-xl group sm:flex space-x-6 bg-white bg-opacity-50 shadow-xl hover:rounded-2xl">
-    {room.actualFile ? (
-    <img
-      src={`${image}/${room.actualFile}`}
-      className="mx-auto w-[150px] block  h-[100px] rounded-lg"
-      alt="Biểu trưng ABC Corp"
-    />
-  ) : (
-    <div className="mx-auto  block w-4/12  h-[100px] border  rounded-lg">
-      <img src={notfound} alt='not found'></img>
-    </div> // Hoặc bạn có thể thay thế bằng lớp CSS tùy chỉnh
-  )}
-		<div class=" pl-0 p-2">
-			<div class="space-y-2">
-				<div class="space-y-4">
-        <Link to={`/Product/${room.id}`}>
-					<h4 class="text-md font-semibold text-red-600 text-justify">
-						{room.title}
-					</h4>
-          </Link>
-				</div>
-				<div class="flex items-center space-x-4 justify-between">
-					<div class="flex gap-3 space-y-1">
-
-						<span class="text-sm">{room.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
-					</div>
-					<div class=" py-1 rounded-lg flex space-x-2 flex-row">
-						<div class="cursor-pointer text-center text-md justify-center items-center flex">
-							<span class="text-md mx-1">{room.area}m²</span>
-						</div>
-						<div class="cursor-pointer text-center text-md justify-center items-center flex">
-							<span class="text-md mx-1"> {getAddressBeforeComma(room.address)}</span>
-						</div>
-					</div>
-				</div>
-				<div class="space-y-2">
-        <Link to={`/Product/${room.id}`}>
-					<h4 class="text-md font-semibold text-cyan-900 text-justify">
-						<TruncatedText text={room.description} maxLength={100} />
-					</h4>
-          </Link>
-				</div>
-        
-			</div>
-		</div>
-	</div>
-</div>
+          <div className="Product static flex gap-4 my-4">
+            <div className="images w-[200px]  relative">
+              <a href={link}> {/* Sử dụng thẻ <a> để tạo liên kết */}
+              {room.actualFile ? (<img
+                  src={`${image}/${room.actualFile}`}
+                  className="border border-black object-cover rounded-lg h-[150px] "
+                  alt="Biểu trưng ABC Corp"
+                />):(<div className="w-full h-full bg-gray-300">
+                  <img src={notfound}></img>
+                </div>)}
+                
+              </a>
+              <span className="group absolute bottom-0 right-0 p-2 transition-colors duration-300"></span>
+            </div>
+            <div className="w-[550px] ">
+              <div className="w-full pr-[15px]">
+                <div className="flex items-center justify-center h-full">
+                <Link to={`/Product/${room.id}`}>
+            <p 
+              
+              className="text-red-700 decoration-black-600 hover:decoration-blue-400  "
+            >
+              {room.title}
+            </p>
+            </Link>
+                  
+                </div>
+                
+                <div className="flex">
+                  <p className="Time ml-auto">{calculateElapsedTime(room)}</p>
+                </div>
+               
+                <div className="flex">
+                  <a className="mr-auto text-blue-400" href="/Login">{room.authorname}</a>
+                  <div className="text-right flex gap-2">
+                    <p>{room.phone}</p>
+                    <button> Nhắn tin </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div style={{ width: '96%', height: '1px', backgroundColor: 'pink' }} className="mb-2 mx-auto"></div>
         </div>
       ))) : (null)}

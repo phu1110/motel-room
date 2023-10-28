@@ -33,9 +33,6 @@ function Navbar() {
     const CategoryResponse = await getCategoryData();
     setCategorys(CategoryResponse.data);
   };
-  const goHome = useCallback(() => {
-    navigate('/');
-  }, [navigate]);
   useEffect(() => {
     categoryData();
     // Hàm xử lý khi cửa sổ thay đổi kích thước
@@ -58,7 +55,7 @@ function Navbar() {
   return (
     <nav className="bg-[#1266dd] ">
       <div className="container mx-auto flex  gap-5 justify-start items-center">
-        <div className="text-white font-semibold text-xl" onClick={goHome}>Trang Chủ</div>
+        <div className="text-white font-semibold text-xl">Trang Chủ</div>
         <div className="hidden md:block">
           <ul className="space-x-4 flex ">
             {categorys.length > 0 ? (categorys.map((category) => (
@@ -69,6 +66,21 @@ function Navbar() {
               </li>
             ))) : (null)}
           </ul>
+          {/* <li className="inline hover:bg-red-600 p-4">
+            </li>
+
+            <li className="inline hover:bg-red-600 p-4">
+              <button onClick={goProduct} className="menu-item text-white  cursor-pointer">
+                Thuê Nhà Nguyên Căn
+              </button>
+            </li>
+
+            <li className="inline hover:bg-red-600 p-4">
+              <button onClick={goProduct} className="menu-item text-white  cursor-pointer">
+                Thuê Căn Hộ
+              </button>
+            </li> */}
+
         </div>
         <div className="md:hidden">
           <button
