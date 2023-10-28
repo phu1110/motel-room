@@ -15,6 +15,7 @@
     left: 0;
     width: 100%;
     z-index: 10;
+    /* Các thuộc tính CSS khác cho navbar đã cuộn */
   }
   .navigation {
     position: fixed;

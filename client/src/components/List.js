@@ -2,7 +2,6 @@ import React, { memo,useEffect, useState } from 'react';
 import { getPost } from '../api/api';
 import { image } from '../api/URL';
 import notfound from '../assets/images/not_found.png'
-import phone from '../assets/images/phone.png'
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
@@ -24,14 +23,14 @@ const List = ({ link, miPrice, maPrice, miArea, maArea, cate, pageN }) => {
   function TruncatedText({ text, maxLength }) {
     if (text.length <= maxLength) {
       return (
-        <td className="text-sm font-semibold text-cyan-900 text-justify ">
+        <td className="text-basic font-bold text-black  px-6 py-4 ">
           {text}
         </td>
       );
     } else {
       const truncatedText = text.slice(0, maxLength) + "...";
       return (
-        <td className="text-sm font-semibold text-cyan-900 text-justify">
+        <td className="text-basic font-bold text-black  px-6 py-4">
           {truncatedText}
         </td>
       );
@@ -81,76 +80,75 @@ const calculateElapsedTime = (room) => {
     <div>
       {Array.isArray(roomList) && roomList.length > 0 ? (roomList.map((room) => (
       <div key={room.id}>
-        
-<div class='flex items-center '>
-	<div class="p-4 items-center mb-2 justify-center w-[750px] rounded-xl group sm:flex space-x-6 bg-white bg-opacity-50 shadow-xl hover:rounded-2xl">
-    {room.actualFile ? (
+        <div className="Product static flex flex-col lg:flex-row lg:justify-start my-8 border border-gray-400 rounded-lg ">
+      <div className="lg:w-[280px] relative">
+        <p>
+        <div className="border border-black object-cover rounded-lg h-[230px]">
+  {room.actualFile ? (
     <img
       src={`${image}/${room.actualFile}`}
-      className="mx-auto w-[40%] block  h-40 rounded-lg"
+      className="w-full h-full"
       alt="Biểu trưng ABC Corp"
     />
   ) : (
-    <div className="mx-auto  block w-4/12 h-40 rounded-lg">
+    <div className="w-full h-full">
       <img src={notfound} alt='not found'></img>
     </div> // Hoặc bạn có thể thay thế bằng lớp CSS tùy chỉnh
   )}
-		<div class=" pl-0 p-2">
-			<div class="space-y-2">
-				<div class="space-y-2">
-        <Link to={`/Product/${room.id}`}>
-					<h4 class="text-md font-semibold text-green-600 text-justify">
-          <TruncatedText text={room.title} maxLength={70} />
-					</h4>
-          </Link>
-				</div>
-				<div class="flex items-center space-x-4 justify-between">
-					<div class="flex gap-3 space-y-1">
+</div>
 
-						<span class="text-sm">{room.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
-					</div>
-					<div class=" py-1 rounded-lg flex space-x-2 flex-row">
-						<div class="cursor-pointer text-center text-md justify-center items-center flex">
-							<span class="text-md mx-1">{room.area}m²</span>
-						</div>
-						<div class="cursor-pointer text-center text-md justify-center items-center flex">
-							<span class="text-md mx-1"> <TruncatedText text={room.address} maxLength={25} /></span>
-						</div>
-					</div>
-				</div>
-				<div class="space-y-2">
-        <Link to={`/Product/${room.id}`}>
-					<h4 class="text-md font-semibold text-cyan-900 text-justify">
-						<TruncatedText text={room.description} maxLength={40} />
-					</h4>
-          </Link>
-				</div>
-        <div class="flex items-center space-x-4 justify-between">
-					<div class="text-grey-500 flex flex-row space-x-1  my-4">
-						<p class="text-xs">{room.authorname}</p>
-					</div>
-					<div class="flex flex-row space-x-1">
-						<div
-							class="bg-red-500 shadow-lg shadow- shadow-red-600 text-white cursor-pointer px-3 py-1 text-center justify-center items-center rounded-xl flex space-x-2 flex-row">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
-  <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
-</svg>
-							<span>{room.phone}</span>
-						</div>
-						<div
-							class="bg-green-500 shadow-lg shadow- shadow-green-600 text-white cursor-pointer px-3 text-center justify-center items-center py-1 rounded-xl flex space-x-2 flex-row">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
-  <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
-</svg>
-              <span>Nhắn tin</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
+        </p>
+        <span className="group absolute bottom-0 right-0 p-2 transition-colors duration-300"></span>
+      </div>
+      <div className="w-full lg:w-[400px]">
+        <div className="w-full lg:w-[calc(100% - 280px)] pr-[15px]">
+          <div className="flex items-center justify-center h-full">
+            
+            <Link to={`/Product/${room.id}`}>
+            <p 
+              
+              className="text-pink-400 decoration-black-600 hover:decoration-blue-400"
+            >
+              {room.title}
+            </p>
+            </Link>
+          </div>
+          <div className="flex items-center justify-between gap-2 pl-[2px]">
+            <p className="price text-sky-400"> {room.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
+            <p className="acreage"> {room.area}m² </p>
+            <p className="address decoration-black hover:decoration-blue-400 ">
+            {getAddressBeforeComma(room.address)}
+            </p>
+          </div>
+          <div className="hidden lg:flex">
+            <p className="Time ml-auto">{calculateElapsedTime(room)}</p>
+          </div>
+        
+          <style>
+            {`
+              @media (max-width: 768px) {
+                .description {
+                  display: none;
+                }
+              }
+            `}
+          </style>
+          <div className="description lg:w-300px">
+            <p className="text-gray-400"> <TruncatedText text={room.description} maxLength={100} /></p>
+          </div>
+          <div className="flex flex-col lg:flex-row">
+            <p className="mt-2 lg:mt-0 lg:mr-auto text-blue-400" >
+             {room.authorname}
+            </p>
+            <div className="text-right flex gap-2">
+              <p>{room.phone}</p>
+              <button className="mt-2 lg:mt-0">Nhắn tin</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
       ))) : (null)}
   </div>
   );

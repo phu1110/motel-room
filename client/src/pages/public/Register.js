@@ -180,22 +180,6 @@ const Register = () => {
                 <option value='5'>Chủ Trọ</option>
             </select>
           </div>
-          
-          </div>
-          <div>
-            <label
-              className="text-gray-800 font-semibold block my-3 text-md"
-              htmlFor="password"
-            >
-              Mật khẩu
-            </label>
-            <input
-              className="w-full  bg-gray-100 px-4 rounded-lg focus:outline-none"
-              type="password"
-              name="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              id="password"
-              placeholder="password"
-            />
           </div>
           <div className="bg-white px-4 py-5 rounded-lg shadow-lg text-center w-48">
         <div className="mb-4">
@@ -215,7 +199,21 @@ const Register = () => {
         </label>
       </div>
 
-         
+          <div>
+            <label
+              className="text-gray-800 font-semibold block my-3 text-md"
+              htmlFor="password"
+            >
+              Mật khẩu
+            </label>
+            <input
+              className="w-full max-w-[300px] bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
+              type="password"
+              name="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              id="password"
+              placeholder="password"
+            />
+          </div>
           {/* <div>
             <label
               className="text-gray-800 font-semibold block my-3 text-md"

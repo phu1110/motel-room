@@ -53,7 +53,7 @@ const Productdetails = () => {
     const imagePaths = actualFile ? actualFile.split(';').filter(path => path.trim() !== '').map(path => path.replace(/\\/g, '/')) : [];
     const completePaths = imagePaths.map(imagePath => `${image}/${imagePath}`);
     return (
-      <div className='w-[1250px] flex justify-between gap-2 bg-white bg-opacity-50 shadow-xl p-4'>
+      <div className='w-[1050px] flex justify-between gap-2'>
       <div>
       <div className='left max-w-[750px]  border border-black rounded-lg '>
       <Slide>
@@ -93,7 +93,14 @@ const Productdetails = () => {
           
           <div className='mt-[10px]'>
             <p className='text-2xl ml-[5px] font-bold'> Thông Tin Mô Tả</p>
-            <div className='ml-[25px]'>{roomData.description}
+            <div className='ml-[25px]'>
+            {roomData.description && (
+  <div>
+    {roomData.description.split('.').map((sentence, index) => (
+      <p className='text-violet-400 py-[4px] ' key={index}>-{sentence.trim()}</p>
+    ))}
+  </div>
+)}
 
             </div>
           </div>
