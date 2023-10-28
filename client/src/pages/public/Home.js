@@ -24,12 +24,12 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="app ">
-      
-      <div className={`navigation-container  ${scrolled ? 'fixed-navbar' : ''}`} >
-      <Header   />
+    <div className="app">
+      <Header />
+      <div className={`navigation-container ${scrolled ? 'fixed-navbar' : ''}`}>
+        <Navigation />
       </div>
-      <div className='w-full flex flex-col items-center justify-start  from-red-100 via-gray-300 to-blue-500 bg-gradient-to-br'>
+      <div className='w-full flex flex-col items-center justify-start'>
         <Outlet />
       </div>
       <Footer />
