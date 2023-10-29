@@ -290,6 +290,11 @@ const hideToast = () => {
                                   <span className="bg-rose-600 text-white py-1 px-3 rounded-full text-xs">
                                     Không được duyệt
                                   </span>
+                                )
+                                : post.status === 'Đã Ẩn' ? (
+                                  <span className="bg-rose-600 text-white py-1 px-3 rounded-full text-xs">
+                                    Đã Ẩn
+                                  </span>
                                 ) : null}
                               </td>
                               <td className="px-6 py-2 ">
