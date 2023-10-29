@@ -49,7 +49,7 @@ export const NewList = ({images,title,price,date}) => {
   }, []);
   return (
     <div>
-      <h2 className="text-center text-xl font-bold my-4">Tin mới đăng</h2>
+      <h2 className="text-center text-xl font-bold my-4 ">Tin mới đăng</h2>
       {Array.isArray(roomList) && roomList.length > 0 ? (roomList.slice(0,3).map((room) => (
         <div key={room.id}>
           <div className="grid grid-cols gap-2 mx-2">

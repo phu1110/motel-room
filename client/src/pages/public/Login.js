@@ -109,10 +109,9 @@ const Login = () => {
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <input id="remember_me" name="remember_me" type="checkbox" className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded" />
-              <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-800">
-                Nhớ tài khoản
-              </label>
+              <Link to='/register' className="ml-2 block text-sm text-gray-800">
+                Đăng kí tài khoản
+              </Link>
             </div>
             <div className="text-sm">
               <Link to='/register' className="text-green-400 hover:text-green-500">
