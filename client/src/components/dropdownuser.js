@@ -38,6 +38,10 @@ const DropdownUser = () => {
     navigate('.Post/Profile');
     setIsOpen(false); // Đóng dropdown sau khi chuyển hướng
   }, [navigate]);
+  const goPayment = useCallback(() => {
+    navigate('.Post/Payment');
+    setIsOpen(false); // Đóng dropdown sau khi chuyển hướng
+  }, [navigate]);
 
   const closeDropdown = (event) => {
     // Kiểm tra xem sự kiện được kích hoạt có nằm trong dropdown không
@@ -103,7 +107,7 @@ const DropdownUser = () => {
        <p  class="cursor-pointer block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
              Đăng kí gói
          </p>
-       <p  class="cursor-pointer block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+       <p onClick={goPayment} class="cursor-pointer block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
              Nạp tiền
          </p>
        <p onClick={goPost} class="cursor-pointer block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">

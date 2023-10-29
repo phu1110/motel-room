@@ -53,18 +53,18 @@ const Productdetails = () => {
     const imagePaths = actualFile ? actualFile.split(';').filter(path => path.trim() !== '').map(path => path.replace(/\\/g, '/')) : [];
     const completePaths = imagePaths.map(imagePath => `${image}/${imagePath}`);
     return (
-      <div className='w-[1050px] flex justify-between gap-2'>
+      <div className='w-[1200px] flex justify-between gap-2 bg-white  shadow-xl rounded-lg'>
       <div>
-      <div className='left max-w-[750px]  border border-black rounded-lg '>
+      <div className='left max-w-[800px]  border border-black rounded-lg p-4'>
       <Slide>
   {completePaths.length > 0 ? (
     completePaths.map((completePath, index) => (
       <div key={index} className="each-slide-effect">
-        <div style={{ 'backgroundImage': `url(${completePath})`, 'maxWidth': '750px', 'maxHeight': '350px', }}></div>
+        <div style={{ 'backgroundImage': `url(${completePath})`, 'maxWidth': '800px', 'maxHeight': '350px', }}></div>
       </div>
     ))
   ) : (
-    <div className="each-slide-effect">
+    <div className="each-slide-effect ">
       <div style={{ 'backgroundImage': `url(${notfound})` }}></div>
     </div>
   )}
@@ -94,13 +94,7 @@ const Productdetails = () => {
           <div className='mt-[10px]'>
             <p className='text-2xl ml-[5px] font-bold'> Thông Tin Mô Tả</p>
             <div className='ml-[25px]'>
-            {roomData.description && (
-  <div>
-    {roomData.description.split('.').map((sentence, index) => (
-      <p className='text-violet-400 py-[4px] ' key={index}>-{sentence.trim()}</p>
-    ))}
-  </div>
-)}
+           {roomData.description}
 
             </div>
           </div>
@@ -109,33 +103,33 @@ const Productdetails = () => {
         <SanPham1/>
         </div>
           </div>
-          <div className="right flex flex-col gap-4  ">
-        <div className=" border border-black  rounded-lg">
+          <div className="right flex flex-col gap-4 my-4 mx-4 ">
+        <div className=" border border-black  rounded-lg  bg-white bg-opacity-50 shadow-xl">
           <h2 className="text-center text-xl font-bold my-4">Tìm theo giá</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <TiemKiemGia link={() => goMainSort(1,1000000,null,null, null)} Icons={BsChevronRight} text={'Dưới 1 Triệu'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(1000000,2000000,null,null, null)} Icons={BsChevronRight} text={'Từ 1 - 2 triệu'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(2000000,3000000,null,null, null)} Icons={BsChevronRight} text={'Từ 2 - 3 triệu'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(3000000,5000000,null,null, null)} Icons={BsChevronRight} text={'Từ 3 - 5 triệu'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(5000000,7000000,null,null, null)} Icons={BsChevronRight} text={'Từ 5 - 7 triệu'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(7000000,10000000,null,null, null)} Icons={BsChevronRight} text={'Từ 7 - 10 triệu'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(10000000,15000000,null,null, null)} Icons={BsChevronRight} text={'Từ 10 - 15 triệu'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(15000000,150000000,null,null, null)} Icons={BsChevronRight} text={'Trên 15 triệu'}></TiemKiemGia>
+          <div className="">
+            <TiemKiemGia link={() => goMainSort(1,1000000,null,null, null)} Icons={BsChevronRight} text={'Dưới 1 triệu đồng'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(1000000,2000000,null,null, null)} Icons={BsChevronRight} text={'Từ 1 triệu đồng đến 2 triệu đồng'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(2000000,3000000,null,null, null)} Icons={BsChevronRight} text={'Từ 2 triệu đồng đến 3 triệu đồng'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(3000000,5000000,null,null, null)} Icons={BsChevronRight} text={'Từ 3 triệu đồng đến 4 triệu đồng'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(5000000,7000000,null,null, null)} Icons={BsChevronRight} text={'Từ 5 triệu đồng đến 7 triệu đồng'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(7000000,10000000,null,null, null)} Icons={BsChevronRight} text={'Từ 7 triệu đồng đến 10 triệu đồng'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(10000000,15000000,null,null, null)} Icons={BsChevronRight} text={'Từ 10 triệu đồng đến 15 triệu đồng'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(15000000,150000000,null,null, null)} Icons={BsChevronRight} text={'Trên 15 triệu đồng'}></TiemKiemGia>
           </div>
         </div>
-        <div className=" border border-black  rounded-lg ">
+        <div className="w-full min-w-[1px] border border-black  rounded-lg  bg-white bg-opacity-50 shadow-xl">
           <h2 className="text-center text-xl font-bold my-4">Tìm Theo Diện Tích</h2>
-          <div className="grid grid-cols-2 gap-2 ">
-            <TiemKiemGia link={() => goMainSort(null,null,1,20, null)} Icons={BsChevronRight} text={'Dưới 20m'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(null,null,20,30, null)} Icons={BsChevronRight} text={'Từ 20 - 30m'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(null,null,30,50, null)} Icons={BsChevronRight} text={'Từ 30 - 50m'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(null,null,50,70, null)} Icons={BsChevronRight} text={'Từ 50 - 70m'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(null,null,70,90, null)} Icons={BsChevronRight} text={'Từ 70 - 90m'}></TiemKiemGia>
-            <TiemKiemGia link={() => goMainSort(null,null,90,99999, null)} Icons={BsChevronRight} text={'Trên 90m'}></TiemKiemGia>
+          <div className=" ">
+            <TiemKiemGia link={() => goMainSort(null,null,1,20, null)} Icons={BsChevronRight} text={'Dưới 20 mét vuông'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(null,null,20,30, null)} Icons={BsChevronRight} text={'Từ 20 mét vuông - 30 mét vuông'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(null,null,30,50, null)} Icons={BsChevronRight} text={'Từ 30 mét vuông - 50 mét vuông'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(null,null,50,70, null)} Icons={BsChevronRight} text={'Từ 50 mét vuông - 70 mét vuông'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(null,null,70,90, null)} Icons={BsChevronRight} text={'Từ 70 mét vuông - 90 mét vuông'}></TiemKiemGia>
+            <TiemKiemGia link={() => goMainSort(null,null,90,99999, null)} Icons={BsChevronRight} text={'Trên 90 mét vuông'}></TiemKiemGia>
           </div>
         </div>
-        <div className="  border border-black rounded-lg ">
-        <TinMoi />
+        <div className="  border border-black rounded-lg  bg-white bg-opacity-50 shadow-xl">
+        <TinMoi/>
         </div>
       </div>
         </div>

@@ -35,7 +35,6 @@ const InfoUser = () => {
                             />
         {user && user.firstname && user.lastname && <p className="text-lg font-semibold">{user.firstname +" "+user.lastname}</p>}
         {user && user.userid &&<p className="text-gray-600 mb-2">ID: {user.userid}</p>}
-        <p className="text-green-500 font-semibold text-xl">{userData.accountBalance}</p>
         <button className="w-full px-4 py-2 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors" onClick={goPayment}>
           Nạp tiền
         </button>

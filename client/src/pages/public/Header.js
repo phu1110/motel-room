@@ -78,7 +78,7 @@ const Header = () => {
      <i class="fa-solid fa-house"></i> Trọ Tốt
     </p>
     <div className="hidden md:block">
-          <ul className="space-x-4 flex ">
+          <ul className="space-x-4 flex p-2 ">
             {categorys.length > 0 ? (categorys.map((category) => (
               <li key={category.id} className="inline p-2 hover:rounded-lg hover:bg-red-600 ">
                 <button onClick={() => goMainSort(null,null,null,null,category.id)} className="menu-item text-white  cursor-pointer">
