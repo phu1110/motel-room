@@ -20,7 +20,6 @@ const EditPost = ({ data, toggleForm }) => {
     });
     const handleSave = async (e) => {
         if (imagetoDelete !== null) {
-            console.log(imagetoDelete);
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -79,7 +78,6 @@ const EditPost = ({ data, toggleForm }) => {
             `https://localhost:7139/api/Post/update-post-by-id?id=${data.id}`,
             formDataObject, config
         );
-        console.log(response);
         const formDataObjectAsObject = {};
         for (const [key, value] of formDataObject.entries()) {
             formDataObjectAsObject[key] = value;

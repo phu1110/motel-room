@@ -52,23 +52,60 @@ const Productdetails = () => {
   
     const imagePaths = actualFile ? actualFile.split(';').filter(path => path.trim() !== '').map(path => path.replace(/\\/g, '/')) : [];
     const completePaths = imagePaths.map(imagePath => `${image}/${imagePath}`);
+    const [currentIndex, setCurrentIndex] = useState(1);
+    const previous = () => {
+      if (currentIndex > 1) {
+        setCurrentIndex(currentIndex - 1);
+      }
+    };
+  
+    const forward = () => {
+      if (currentIndex < completePaths.length) {
+        setCurrentIndex(currentIndex + 1);
+      }
+    };
     return (
       <div className='w-[1200px] flex justify-between gap-2 bg-white  shadow-xl rounded-lg'>
       <div>
       <div className='left max-w-[800px]  border border-black rounded-lg p-4'>
-      <Slide>
-  {completePaths.length > 0 ? (
-    completePaths.map((completePath, index) => (
-      <div key={index} className="each-slide-effect">
-        <div style={{ 'backgroundImage': `url(${completePath})`, 'maxWidth': '800px', 'maxHeight': '350px', }}></div>
-      </div>
-    ))
-  ) : (
-    <div className="each-slide-effect ">
-      <div style={{ 'backgroundImage': `url(${notfound})` }}></div>
+      <div className="grid w-full place-content-center">
+  <div className="relative mx-auto max-w-4xl overflow-hidden rounded-md bg-gray-100 p-2 sm:p-4">
+    <div className="absolute right-5 top-5 z-10 rounded-full bg-gray-600 px-2 text-center text-sm text-white">
+      <span>{currentIndex}</span>/<span>{completePaths.length}</span>
     </div>
-  )}
-</Slide>
+
+    <button
+      onClick={previous}
+      className="absolute left-5 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-gray-100 shadow-md"
+    >
+      <i className="fas fa-chevron-left text-2xl font-bold text-gray-500"></i>
+    </button>
+
+    <button
+      onClick={forward}
+      className="absolute right-5 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-gray-100 shadow-md"
+    >
+      <i className="fas fa-chevron-right text-2xl font-bold text-gray-500"></i>
+    </button>
+
+    <div className="relative h-80" style={{ width: "40rem" }}>
+      {completePaths.map((image, index) => (
+        <div
+          key={index}
+          style={{
+            display: currentIndex === index + 1 ? "block" : "none",
+            width: "100%", // Set width to 100%
+            height: "100%", // Set height to 100%
+          }}
+          className="absolute top-0"
+        >
+          <img src={image} alt="image" className="rounded-sm w-full h-full object-cover" />
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
           
           {roomData ? (
           <div className='ml-[15px]'>

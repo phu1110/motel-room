@@ -36,7 +36,6 @@ const PostNew = () => {
     const handleChange = () => {
         const selectedItemIds = Object.keys(selectedItems);
         selectedItems.forEach((itemId) => {
-            console.log(itemId);
         });
     };
     
